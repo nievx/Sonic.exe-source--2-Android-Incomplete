@@ -1,6 +1,7 @@
 package; // If you reading this, i am putting random comments on my code cus i feel lonely.
 
 import Replay.Ana;
+import ui.Mobilecontrols;
 import Replay.Analysis;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -311,6 +312,10 @@ class PlayState extends MusicBeatState
 	public static var highestCombo:Int = 0;
 
 	private var executeModchart = false;
+
+	#if mobileC
+	var mcontrols:Mobilecontrols; 
+	#end
 
 	// API stuff
 
@@ -1939,6 +1944,29 @@ class PlayState extends MusicBeatState
 		if (loadRep)
 			replayTxt.cameras = [camHUD];
 
+		#if mobileC
+			mcontrols = new Mobilecontrols();
+			switch (mcontrols.mode)
+			{
+				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
+					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
+				case HITBOX:
+					controls.setHitBox(mcontrols._hitbox);
+				default:
+			}
+			trackedinputs = controls.trackedinputs;
+			controls.trackedinputs = [];
+
+			var camcontrol = new FlxCamera();
+			FlxG.cameras.add(camcontrol);
+			camcontrol.bgColor.alpha = 0;
+			mcontrols.cameras = [camcontrol];
+
+			mcontrols.visible = false;
+
+			add(mcontrols);
+		#end
+
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
@@ -2869,6 +2897,10 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+
+		#if mobileC
+		mcontrols.visible = true;
+		#end
 		FlxG.log.add(storyPlaylist);
 
 		ezTrail = new FlxTrail(dad, null, 2, 5, 0.3, 0.04);
@@ -3884,7 +3916,7 @@ class PlayState extends MusicBeatState
 		if (isRing)
 			counterNum.text = Std.string(cNum);
 
-		if ((FlxG.keys.justPressed.SPACE || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge)
+		if ((FlxG.keys.justPressed.SPACE || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge) //This looks like sus
 		{
 			dodging = true;
 			boyfriend.playAnim('dodge', true);
@@ -4052,7 +4084,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.x = (originalX - (lengthInPx / 2)) + 335;
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -5079,7 +5111,9 @@ class PlayState extends MusicBeatState
 
 					if (SONG.validScore)
 					{
+						#if newgrounds
 						NGio.unlockMedal(60961);
+						#end
 						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 					}
 

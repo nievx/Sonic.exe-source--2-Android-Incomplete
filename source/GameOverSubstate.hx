@@ -12,6 +12,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.FlxCamera;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -208,6 +209,14 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
+
+		#if mobileC
+		addVirtualPad(NONE, A_B);
+		var camcontrol = new FlxCamera();
+		FlxG.cameras.add(camcontrol);
+		camcontrol.bgColor.alpha = 0;
+		_virtualpad.cameras = [camcontrol];
+		#end
 
 		bf.playAnim('firstDeath');
 	}

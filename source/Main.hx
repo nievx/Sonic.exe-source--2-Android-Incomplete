@@ -25,6 +25,10 @@ class Main extends Sprite
 
 	public static var watermarks = true; // Whether to put Kade Engine liteartly anywhere
 
+	#if android
+	public static var path = lime.system.System.applicationStorageDirectory; // path to storage folder
+	#end
+
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
@@ -106,12 +110,12 @@ class Main extends Sprite
 
 
 		
-		#if !mobile
+		//#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
 
-		#end
+		//#end
 	}
 
 	var game:FlxGame;

@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 #if windows
@@ -97,6 +98,14 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		#if mobileC
+		addVirtualPad(UP_DOWN, A);
+		var camcontrol = new FlxCamera();
+		FlxG.cameras.add(camcontrol);
+		camcontrol.bgColor.alpha = 0;
+		_virtualpad.cameras = [camcontrol];
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -139,17 +148,17 @@ class PauseSubState extends MusicBeatSubstate
 		var songPath = 'assets/data/' + songLowercase + '/';
 
 		// Controls got really screwed :troll:
-		if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP)
+		if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP || controls.UP_P)
 		{
 			changeSelection(-1);
    
-		}else if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S)
+		}else if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S || controls.DOWN_P)
 		{
 			changeSelection(1);
 		}
 		
 		#if cpp
-			else if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A)
+			else if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A || controls.LEFT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset -= 1;
@@ -176,7 +185,7 @@ class PauseSubState extends MusicBeatSubstate
 					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 					offsetChanged = true;
 				}
-			}else if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D)
+			}else if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D || controls.RIGHT_P)
 			{
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset += 1;
