@@ -339,15 +339,11 @@ class StoryMenuState extends MusicBeatState
 				if (songArray[real] == 'too-slow')
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
-					{
-						// LoadingState.loadAndSwitchState(new PlayState(), true); //save this code for the cutsceneless build of the game
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('tooslowcutscene1'));
-						video.finishCallback = function()
 						{
-							LoadingState.loadAndSwitchState(new PlayState());
-						}
-					});
+							FlxG.camera.fade(FlxColor.BLACK, 1, false, function(){
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/tooslowcutscene1', new PlayState())); 
+							});
+						});
 				}
 			}
 

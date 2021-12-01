@@ -17,10 +17,10 @@ class Mobilecontrols extends FlxSpriteGroup
 
 	var config:Config;
 
-	public function new()
+	public function new() 
 	{
 		super();
-
+		
 		config = new Config();
 
 		// load control mode num from Config.hx
@@ -42,7 +42,7 @@ class Mobilecontrols extends FlxSpriteGroup
 		}
 	}
 
-	function initVirtualPad(vpadMode:Int)
+	function initVirtualPad(vpadMode:Int) 
 	{
 		switch (vpadMode)
 		{
@@ -54,9 +54,9 @@ class Mobilecontrols extends FlxSpriteGroup
 			default: // 0
 				_virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 		}
-
+		
 		_virtualPad.alpha = 0.75;
-		add(_virtualPad);
+		add(_virtualPad);	
 	}
 
 

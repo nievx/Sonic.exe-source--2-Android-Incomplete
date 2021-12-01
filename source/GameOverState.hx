@@ -57,7 +57,7 @@ class GameOverState extends FlxTransitionableState
 			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
 			bfdeathshit.cameras = [coolcam];
 			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('firstdeath')
+			bfdeathshit.animation.play('firstdeath');
 		}
 		add(bfdeathshit);
 

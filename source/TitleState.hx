@@ -65,10 +65,6 @@ class TitleState extends MusicBeatState
 
 		FlxG.worldBounds.set(0, 0);
 
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
-
 		#if sys
 		if (!sys.FileSystem.exists(#if android Main.path #else Sys.getCwd() #end + "/assets/replays"))
 			sys.FileSystem.createDirectory(#if android Main.path #else Sys.getCwd() #end + "/assets/replays");
@@ -188,12 +184,12 @@ class TitleState extends MusicBeatState
 
 		add(logoBlBUMP);
 
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
+	/*	gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
-		add(gfDance);
+		add(gfDance); */
 		add(logoBl);
 
 		titleText = new FlxSprite(0, 0);
@@ -207,9 +203,9 @@ class TitleState extends MusicBeatState
 		// titleText.screenCenter(X);
 		add(titleText);
 
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
-		logo.screenCenter();
-		logo.antialiasing = true;
+	//	var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
+	//	logo.screenCenter();
+	//	logo.antialiasing = true;
 		// add(logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
@@ -342,35 +338,11 @@ class TitleState extends MusicBeatState
 
 			MainMenuState.firstStart = true;
 
-			new FlxTimer().start(4, function(tmr:FlxTimer)
+			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				// Get current version of Kade Engine
-
-				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
-				var returnedData:Array<String> = [];
-
-				var video:MP4Handler = new MP4Handler();
-				video.playMP4(Paths.video('bothCreditsAndIntro'));
-				video.finishCallback = function()
-				{
-					LoadingState.loadAndSwitchState(new MainMenuState());
-				}
-
-				http.onData = function(data:String)
-				{
-					returnedData[0] = data.substring(0, data.indexOf(';'));
-					returnedData[1] = data.substring(data.indexOf('-'), data.length);
-
-					// FlxG.switchState(new VideoState('assets/videos/sonic1.webm', new MainMenuState()));
-				}
-
-				http.onError = function(error)
-				{
-					trace('error: $error');
-					FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				}
-
-				http.request();
+				FlxG.camera.fade(FlxColor.BLACK, 1, false, function(){
+						LoadingState.loadAndSwitchState(new VideoState('assets/videos/bothCreditsAndIntro', new MainMenuState()));
+				});
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
@@ -455,99 +427,6 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-		/*logoBl.animation.play('bump');
-			danceLeft = !danceLeft;
-
-			if (danceLeft)
-				gfDance.animation.play('danceRight');
-			else
-				gfDance.animation.play('danceLeft');
-
-			FlxG.log.add(curBeat);
-
-				switch (curBeat)
-				{
-					case 10:
-						playBoop1();
-						createCoolText(['RightBurst', 'MarStarBro', 'Razencro', 'Comgaming_Nz', 'Zekuta', 'Crybit']);
-					case 11:
-						playBoop1();
-						addMoreText('present');
-					case 12:
-						playBoop2();
-						deleteCoolText();
-					case 13:
-						playBoop1();
-						createCoolText(['Programming']);
-					case 14:
-						playBoop1();
-						addMoreText('by');
-					case 15: 
-						playBoop1();
-						addMoreText('Razencro and Crybit');
-					case 16:
-						playBoop1();
-						addMoreText('Mod Idea');
-					case 17:
-						playBoop1();
-						addMoreText('and Art by');
-					case 18:
-						playBoop1();
-						addMoreText('Rightburst');
-					case 19:
-						playBoop2();
-						deleteCoolText();
-					case 20:
-						playBoop1();
-						createCoolText(['Art by']);
-					case 21:
-						playBoop1();
-						addMoreText('Comgaming_Nz');
-					case 22:
-						playBoop1();
-						addMoreText('Music by');
-					case 23:
-						playBoop1();
-						addMoreText('MarStarBro');
-					case 24:
-						playBoop1();
-						addMoreText('Art by');
-					case 25:
-						playBoop1();
-						addMoreText('Zekuta');
-					case 26:
-						playBoop2();
-						deleteCoolText();
-					case 27:
-						if (curWacky[0] != null || curWacky[0] != '') playBoop1();
-						createCoolText([curWacky[0]]);
-					case 28:
-						if (curWacky[1] != null || curWacky[1] != '') playBoop1();
-						addMoreText(curWacky[1]);
-					case 29:
-						if (curWacky[2] != null || curWacky[2] != '') playBoop1();
-						addMoreText(curWacky[2]);
-					case 30:
-						if (curWacky[3] != null || curWacky[3] != '') playBoop1();
-						addMoreText(curWacky[3]);
-					case 31:
-						playBoop2();
-						deleteCoolText();
-					case 32:
-						playBoop1();
-						createCoolText(['Friday']);
-					case 33:
-						playBoop1();
-						addMoreText('Night');
-					case 34:
-						playBoop1();
-						addMoreText('Funkin');
-					case 35:
-						playShow();
-						skipIntro();
-			}
-		 */
 	}
 
 	var skippedIntro:Bool = false;

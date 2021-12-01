@@ -37,9 +37,9 @@ class VideoState extends MusicBeatState
 	}
 
 	public override function update(dt:Float) {
-		for (touch in FlxG.touches.list)
-			if (touch.justReleased)
-				onClose();
+		//for (touch in FlxG.touches.list)
+		//	if (touch.justReleased)
+				onClose(); //Maybe this will make cutscenes work smoother than before
 
 		super.update(dt);	
 	}

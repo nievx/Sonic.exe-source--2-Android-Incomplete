@@ -29,7 +29,7 @@ class Hitbox extends FlxSpriteGroup
     public var buttonDown:FlxButton;
     public var buttonUp:FlxButton;
     public var buttonRight:FlxButton;
-
+    
     public function new(?widghtScreen:Int)
     {
         super();
@@ -39,7 +39,7 @@ class Hitbox extends FlxSpriteGroup
 
         sizex = widghtScreen != null ? Std.int(widghtScreen / 4) : 320;
 
-
+        
         //add graphic
         hitbox = new FlxSpriteGroup();
         hitbox.scrollFactor.set();
@@ -63,14 +63,14 @@ class Hitbox extends FlxSpriteGroup
     public function createhitbox(X:Float, framestring:String) {
         var button = new FlxButton(X, 0);
         var frames = FlxAtlasFrames.fromSparrow('assets/shared/images/hitbox/hitbox.png', 'assets/shared/images/hitbox/hitbox.xml');
-
+        
         var graphic:FlxGraphic = FlxGraphic.fromFrame(frames.getByName(framestring));
 
         button.loadGraphic(graphic);
 
         button.alpha = 0;
 
-
+    
         button.onDown.callback = function (){
             FlxTween.num(0, 0.75, .075, {ease: FlxEase.circInOut}, function (a:Float) { button.alpha = a; });
         };
@@ -78,7 +78,7 @@ class Hitbox extends FlxSpriteGroup
         button.onUp.callback = function (){
             FlxTween.num(0.75, 0, .1, {ease: FlxEase.circInOut}, function (a:Float) { button.alpha = a; });
         }
-
+        
         button.onOut.callback = function (){
             FlxTween.num(button.alpha, 0, .2, {ease: FlxEase.circInOut}, function (a:Float) { button.alpha = a; });
         }
@@ -89,7 +89,7 @@ class Hitbox extends FlxSpriteGroup
     override public function destroy():Void
         {
             super.destroy();
-
+    
             buttonLeft = null;
             buttonDown = null;
             buttonUp = null;

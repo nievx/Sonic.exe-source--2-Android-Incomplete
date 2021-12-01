@@ -11,7 +11,7 @@ class KadeEngineData
 		if (FlxG.save.data.storyProgress == null) // Data erase fuck you.
 		{
 			FlxG.save.data.storyProgress = 0;
-			FlxG.save.data.soundTestUnlocked = false;
+			FlxG.save.data.soundTestUnlocked = true;
 			
 		}
 
@@ -31,7 +31,7 @@ class KadeEngineData
 			FlxG.save.data.jumpscares = true;
 
 		if (FlxG.save.data.soundTestUnlocked == null)
-			FlxG.save.data.soundTestUnlocked = false;
+			FlxG.save.data.soundTestUnlocked = true;
 
         if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
@@ -68,10 +68,10 @@ class KadeEngineData
 			FlxG.save.data.fpsRain = false;
 
 		if (FlxG.save.data.fpsCap == null)
-			FlxG.save.data.fpsCap = 120;
+			FlxG.save.data.fpsCap = 60;
 
-		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
-			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
+		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 30)
+			FlxG.save.data.fpsCap = 60; // baby proof so you can't hard lock ur copy of kade engine
 		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;

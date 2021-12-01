@@ -47,8 +47,6 @@ class SoundTestMenu extends MusicBeatState
 
     override function create()
         {
-			DiscordClient.changePresence('In the Sound Test Menu', null);
-
 			new FlxTimer().start(0.1, function(tmr:FlxTimer)
 				{
 					FlxG.sound.playMusic(Paths.music('breakfast'));
@@ -349,37 +347,19 @@ class SoundTestMenu extends MusicBeatState
 			}
 		else if (first == 23 && second == 23) 
 			{
-				var video:MP4Handler = new MP4Handler();
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-                	video.playMP4(Paths.video('Keel'));
-					incameo = true;
-				});
+			new FlxTimer().start(2, function(tmr:FlxTimer)
+			{
+				LoadingState.loadAndSwitchState(new VideoState('assets/videos/Keel', new SoundTestMenu())); 
+
+			});
 			}
 		else if (first == 12 && second == 34) 
 			{
-				var video:MP4Handler = new MP4Handler();
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-                	video.playMP4(Paths.video('Milky'));
-					incameo = true;
-				});
+			new FlxTimer().start(2, function(tmr:FlxTimer)
+			{
+				LoadingState.loadAndSwitchState(new VideoState('assets/videos/Milky', new SoundTestMenu())); 
+
+			});
 			}
 		else if (first == 32 && second == 8) 
 		{

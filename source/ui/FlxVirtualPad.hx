@@ -20,7 +20,7 @@ import openfl.utils.ByteArray;
  */
 @:keep @:bitmap("assets/preload/images/virtual-input.png")
 class GraphicVirtualInput extends BitmapData {}
-
+ 
 @:file("assets/preload/images/virtual-input.txt")
 class VirtualInputData extends #if (lime_legacy || nme) ByteArray #else ByteArrayData #end {}
 
@@ -174,7 +174,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 			Reflect.setProperty(bitmapData, "height", 183);
 			#end
 			*/
-
+			
 			#if !web
 			var graphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmapData);
 			return FlxAtlasFrames.fromSpriteSheetPacker(graphic, Std.string(new VirtualInputData()));

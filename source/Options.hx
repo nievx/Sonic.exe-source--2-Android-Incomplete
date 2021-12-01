@@ -575,9 +575,9 @@ class FPSCapOption extends Option
 	}
 
 	override function left():Bool {
-		if (FlxG.save.data.fpsCap > 290)
-			FlxG.save.data.fpsCap = 290;
-		else if (FlxG.save.data.fpsCap < 60)
+		if (FlxG.save.data.fpsCap > 120)
+			FlxG.save.data.fpsCap = 120;
+		else if (FlxG.save.data.fpsCap < 30)
 			FlxG.save.data.fpsCap = Application.current.window.displayMode.refreshRate;
 		else
 			FlxG.save.data.fpsCap = FlxG.save.data.fpsCap - 10;

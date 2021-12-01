@@ -74,10 +74,6 @@
 	<assets path="assets/videos" exclude="*.mp3" if="web"/>
 	<assets path="assets/videos" exclude="*.ogg" unless="web"/>
 
-	<assets path="plugins/" rename='' if="windows"/>
-	<assets path="dlls/" rename='' if="windows"/>
-	
-
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
@@ -106,7 +102,7 @@
 
 	<haxelib name="extension-webview"/>
 
-	<haxelib name="hxcpp-debug-server" if="debug" unless="html5" />
+	<haxelib name="hxcpp-debug-server" if="debug" unless="android" />
 
 	<haxelib name="actuate" />
 	<haxelib name="extension-webm"/> <!-- Make sure to use https://github.com/KadeDev/extension-webm/ -->
@@ -115,7 +111,7 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="newgrounds" unless="mobile" />
 	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod"/>
+	<!--haxelib name="polymod"/ no more -->
 	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit" if="windows"/>
 

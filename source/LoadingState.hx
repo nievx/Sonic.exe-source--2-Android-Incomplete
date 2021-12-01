@@ -37,7 +37,7 @@ class LoadingState extends MusicBeatState
 	override function create()
 	{
 		
-		logo = new FlxSprite(-150, -100);
+	/*	logo = new FlxSprite(-150, -100);
 		logo.frames = Paths.getSparrowAtlas('logoBumpin');
 		logo.antialiasing = true;
 		logo.animation.addByPrefix('bump', 'logo bumpin', 24);
@@ -52,7 +52,7 @@ class LoadingState extends MusicBeatState
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
 		add(gfDance);
-		add(logo);
+		add(logo); */
 		
 		initSongsManifest().onComplete
 		(
@@ -106,13 +106,13 @@ class LoadingState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		logo.animation.play('bump');
+	/*	logo.animation.play('bump');
 		danceLeft = !danceLeft;
 		
 		if (danceLeft)
 			gfDance.animation.play('danceRight');
 		else
-			gfDance.animation.play('danceLeft');
+			gfDance.animation.play('danceLeft'); */
 	}
 	
 	override function update(elapsed:Float)

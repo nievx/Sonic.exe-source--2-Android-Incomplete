@@ -1,5 +1,6 @@
 package; // If you reading this, i am putting random comments on my code cus i feel lonely.
 
+import ui.FlxVirtualPad;
 import Replay.Ana;
 import ui.Mobilecontrols;
 import Replay.Analysis;
@@ -80,6 +81,7 @@ class PlayState extends MusicBeatState
 	public static var instance:PlayState = null;
 
 	public static var curStage:String = '';
+	var dadetective:Bool = false;
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
 	public static var isFreeplay:Bool = false;
@@ -94,6 +96,8 @@ class PlayState extends MusicBeatState
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 
+
+	var _vpad:FlxVirtualPad;
 	var spinArray:Array<Int>;
 
 	public static var songPosBG:FlxSprite;
@@ -449,6 +453,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'chaos')
 			{
+				dadetective = true;
 				FlxG.bitmap.add(Paths.image('characters/fleetway1', 'shared'));
 				FlxG.bitmap.add(Paths.image('characters/fleetway2', 'shared'));
 				FlxG.bitmap.add(Paths.image('characters/fleetway3', 'shared'));
@@ -1950,8 +1955,21 @@ class PlayState extends MusicBeatState
 			{
 				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
 					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
+					_vpad = new FlxVirtualPad(NONE, A);
+					_vpad.alpha = 0.75;
+					_vpad.cameras = [camHUD];
+					if(isRing || dadetective){
+						this.add(_vpad);
+						} //Rosbei o Kaique62 de novo sodasse
+
 				case HITBOX:
 					controls.setHitBox(mcontrols._hitbox);
+						_vpad = new FlxVirtualPad(NONE, A);
+						_vpad.alpha = 0.75;
+						_vpad.cameras = [camHUD];
+						if(isRing || dadetective){
+						this.add(_vpad);
+						} //Rosbei o Kaique62 de novo sodasse
 				default:
 			}
 			trackedinputs = controls.trackedinputs;
@@ -3321,9 +3339,6 @@ class PlayState extends MusicBeatState
 				allowedToHeadbang = false;
 		}
 
-		if (useVideo)
-			GlobalVideo.get().resume();
-
 		#if windows
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText
@@ -3916,7 +3931,7 @@ class PlayState extends MusicBeatState
 		if (isRing)
 			counterNum.text = Std.string(cNum);
 
-		if ((FlxG.keys.justPressed.SPACE || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge) //This looks like sus
+		if ((FlxG.keys.justPressed.SPACE || controls.ACCEPT || _vpad.buttonA.justPressed || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge) //This looks like sus
 		{
 			dodging = true;
 			boyfriend.playAnim('dodge', true);
@@ -3967,16 +3982,6 @@ class PlayState extends MusicBeatState
 		if (PlayStateChangeables.botPlay && FlxG.keys.justPressed.ONE)
 			camHUD.visible = !camHUD.visible;
 
-		if (useVideo && GlobalVideo.get() != null && !stopUpdate)
-		{
-			if (GlobalVideo.get().ended && !removedVideo)
-			{
-				remove(videoSprite);
-				FlxG.stage.window.onFocusOut.remove(focusOut);
-				FlxG.stage.window.onFocusIn.remove(focusIn);
-				removedVideo = true;
-			}
-		}
 
 		#if windows
 		if (executeModchart && luaModchart != null && songStarted)
@@ -4103,14 +4108,6 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			if (useVideo)
-			{
-				GlobalVideo.get().stop();
-				remove(videoSprite);
-				FlxG.stage.window.onFocusOut.remove(focusOut);
-				FlxG.stage.window.onFocusIn.remove(focusIn);
-				removedVideo = true;
-			}
 			#if windows
 			DiscordClient.changePresence("Chart Editor", null, null, true);
 			#end
@@ -4183,14 +4180,6 @@ class PlayState extends MusicBeatState
 		#if debug
 		if (FlxG.keys.justPressed.SIX)
 		{
-			if (useVideo)
-			{
-				GlobalVideo.get().stop();
-				remove(videoSprite);
-				FlxG.stage.window.onFocusOut.remove(focusOut);
-				FlxG.stage.window.onFocusIn.remove(focusIn);
-				removedVideo = true;
-			}
 
 			FlxG.switchState(new AnimationDebug(dad.curCharacter));
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
@@ -4206,14 +4195,6 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.EIGHT)
 		{
-			if (useVideo)
-			{
-				GlobalVideo.get().stop();
-				remove(videoSprite);
-				FlxG.stage.window.onFocusOut.remove(focusOut);
-				FlxG.stage.window.onFocusIn.remove(focusIn);
-				removedVideo = true;
-			}
 
 			FlxG.switchState(new AnimationDebug(gf.curCharacter));
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
@@ -5000,11 +4981,12 @@ class PlayState extends MusicBeatState
 	{
 		camHUD.visible = false;
 
+		dadetective = false;
+
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
 		if (useVideo)
 		{
-			GlobalVideo.get().stop();
 			FlxG.stage.window.onFocusOut.remove(focusOut);
 			FlxG.stage.window.onFocusIn.remove(focusIn);
 			PlayState.instance.remove(PlayState.instance.videoSprite);
@@ -5089,12 +5071,7 @@ class PlayState extends MusicBeatState
 
 					if (curSong == 'triple-trouble')
 					{
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('soundtestcodes'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
-						}
+						FlxG.switchState(new VideoState('assets/videos/soundtestcodes', new MainMenuState()));  
 					}
 					else
 						FlxG.switchState(new MainMenuState());
@@ -5156,13 +5133,7 @@ class PlayState extends MusicBeatState
 
 					if (curSong.toLowerCase() == 'too-slow' && storyDifficulty == 2)
 					{
-						FlxG.save.data.storyProgress = 1;
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('tooslowcutscene2'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new PlayState());
-						}
+						LoadingState.loadAndSwitchState(new VideoState('assets/videos/tooslowcutscene2', (new PlayState())));  
 					}
 					else if (curSong.toLowerCase() == 'too-slow' && storyDifficulty != 2)
 					{
@@ -5170,14 +5141,7 @@ class PlayState extends MusicBeatState
 					}
 					else if (curSong == 'you-cant-run')
 					{
-						FlxG.save.data.storyProgress = 2;
-						FlxG.save.data.soundTestUnlocked = true;
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('youcantruncutscene2'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new PlayState());
-						}
+						LoadingState.loadAndSwitchState(new VideoState('assets/videos/youcantruncutscene2', (new PlayState()))); 
 					}
 					else
 						LoadingState.loadAndSwitchState(new PlayState());
@@ -5216,26 +5180,11 @@ class PlayState extends MusicBeatState
 							FlxG.switchState(new FreeplayState());
 						}
 					case 'too-slow':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('tooslowcutscene2'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
-						}
+						FlxG.switchState(new VideoState('assets/videos/tooslowcutscene2', (new MainMenuState())));
 					case 'you-cant-run':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('youcantruncutscene2'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
-						}
+						FlxG.switchState(new VideoState('assets/videos/youcantruncutscene2', (new MainMenuState())));
 					case 'triple-trouble':
-						var video:MP4Handler = new MP4Handler();
-						video.playMP4(Paths.video('soundtestcodes'));
-						video.finishCallback = function()
-						{
-							LoadingState.loadAndSwitchState(new MainMenuState());
-						}
+						FlxG.switchState(new VideoState('assets/videos/soundtestcodes', (new MainMenuState())));
 				}
 			}
 		}
@@ -5855,8 +5804,6 @@ class PlayState extends MusicBeatState
 	public var fuckingVolume:Float = 1;
 	public var useVideo = false;
 
-	public static var webmHandler:WebmHandler;
-
 	public var playingDathing = false;
 	public var videoSprite:FlxSprite;
 
@@ -5893,33 +5840,6 @@ class PlayState extends MusicBeatState
 		var ourSource:String = "assets/videos/daWeirdVid/dontDelete.webm";
 		WebmPlayer.SKIP_STEP_LIMIT = 90;
 		var str1:String = "WEBM SHIT";
-		webmHandler = new WebmHandler();
-		webmHandler.source(ourSource);
-		webmHandler.makePlayer();
-		webmHandler.webm.name = str1;
-
-		GlobalVideo.setWebm(webmHandler);
-
-		GlobalVideo.get().source(source);
-		GlobalVideo.get().clearPause();
-		if (GlobalVideo.isWebm)
-		{
-			GlobalVideo.get().updatePlayer();
-		}
-		GlobalVideo.get().show();
-
-		if (GlobalVideo.isWebm)
-		{
-			GlobalVideo.get().restart();
-		}
-		else
-		{
-			GlobalVideo.get().play();
-		}
-
-		var data = webmHandler.webm.bitmapData;
-
-		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
 
 		videoSprite.setGraphicSize(Std.int(videoSprite.width * 1.2));
 
@@ -5933,11 +5853,6 @@ class PlayState extends MusicBeatState
 		add(dad);
 
 		trace('poggers');
-
-		if (!songStarted)
-			webmHandler.pause();
-		else
-			webmHandler.resume();
 		#end
 	}
 
