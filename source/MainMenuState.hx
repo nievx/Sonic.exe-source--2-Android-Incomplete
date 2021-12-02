@@ -192,7 +192,7 @@ class MainMenuState extends MusicBeatState
 		changeItem();
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPad(UP_DOWN, A); //No second chances for ya
 		#end
 
 		super.create();

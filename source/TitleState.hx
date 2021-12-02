@@ -184,12 +184,12 @@ class TitleState extends MusicBeatState
 
 		add(logoBlBUMP);
 
-	/*	gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
+		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
-		add(gfDance); */
+		add(gfDance);
 		add(logoBl);
 
 		titleText = new FlxSprite(0, 0);
@@ -275,35 +275,34 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = controls.ACCEPT;
 
+
 		#if mobile
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
+			addVirtualPad(FULL, A);
+			if (controls.ACCEPT)
 			{
 				pressedEnter = true;
 			}
-		}
 		#end
 
-		if (FlxG.keys.justPressed.UP)
+		if (FlxG.keys.justPressed.UP || controls.UP_P)
 			if (code == 0)
 				code = 1;
 			else
 				code == 0;
 
-		if (FlxG.keys.justPressed.DOWN)
+		if (FlxG.keys.justPressed.DOWN || controls.DOWN_P)
 			if (code == 1)
 				code = 2;
 			else
 				code == 0;
 
-		if (FlxG.keys.justPressed.LEFT)
+		if (FlxG.keys.justPressed.LEFT || controls.LEFT_P)
 			if (code == 2)
 				code = 3;
 			else
 				code == 0;
 
-		if (FlxG.keys.justPressed.RIGHT)
+		if (FlxG.keys.justPressed.RIGHT || controls.RIGHT_P)
 			if (code == 3)
 				code = 4;
 			else

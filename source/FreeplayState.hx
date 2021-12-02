@@ -119,7 +119,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		add(whiteshit);
 
 		#if mobileC
-		addVirtualPad(FULL, A_B);
+		addVirtualPad(LEFT_RIGHT, A_B); //yeah I stole Peppy ideia or maybe not... Who cares.
 		#end
 
 		super.create();

@@ -1952,26 +1952,18 @@ class PlayState extends MusicBeatState
 			replayTxt.cameras = [camHUD];
 
 		#if mobileC
+		if(dadetective) {addVirtualPad(NONE, A);} //Ideas... That I stole!!! Thanks danninocent... again...
 			mcontrols = new Mobilecontrols();
 			switch (mcontrols.mode)
 			{
 				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
 					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
-					_vpad = new FlxVirtualPad(NONE, A);
-					_vpad.alpha = 0.75;
-					_vpad.cameras = [camHUD];
-					this.add(_vpad);
 
 				case HITBOX:
 					controls.setHitBox(mcontrols._hitbox);
-						_vpad = new FlxVirtualPad(NONE, A);
-						_vpad.alpha = 0.75;
-						_vpad.cameras = [camHUD];
-						this.add(_vpad);
 				default:
 			}
 			
-			_vpad.visible = dadetective;
 			trackedinputs = controls.trackedinputs;
 			controls.trackedinputs = [];
 
