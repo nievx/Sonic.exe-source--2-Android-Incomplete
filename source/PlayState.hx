@@ -387,6 +387,8 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'triple-trouble')
 			{
+
+				dadetective = true;
 				daP3Static.frames = Paths.getSparrowAtlas('Phase3Static', 'exe');
 				daP3Static.animation.addByPrefix('P3Static', 'Phase3Static instance 1', 24, false);
 				add(daP3Static);
@@ -1958,20 +1960,18 @@ class PlayState extends MusicBeatState
 					_vpad = new FlxVirtualPad(NONE, A);
 					_vpad.alpha = 0.75;
 					_vpad.cameras = [camHUD];
-					if(isRing || dadetective){
-						this.add(_vpad);
-						} //Rosbei o Kaique62 de novo sodasse
+					this.add(_vpad);
 
 				case HITBOX:
 					controls.setHitBox(mcontrols._hitbox);
 						_vpad = new FlxVirtualPad(NONE, A);
 						_vpad.alpha = 0.75;
 						_vpad.cameras = [camHUD];
-						if(isRing || dadetective){
 						this.add(_vpad);
-						} //Rosbei o Kaique62 de novo sodasse
 				default:
 			}
+			
+			_vpad.visible = dadetective;
 			trackedinputs = controls.trackedinputs;
 			controls.trackedinputs = [];
 

@@ -11,9 +11,12 @@ using StringTools;
 
 class VideoState extends MusicBeatState
 {
+	public var nextState:FlxState;
+
+	#if android
 	public static var androidPath:String = 'file:///android_asset/';
 
-	public var nextState:FlxState;
+
 
 	var text:FlxText;
 
@@ -57,4 +60,13 @@ class VideoState extends MusicBeatState
 		if (url == 'http://exitme(.*)') onClose(); // drity hack lol
 		trace("WebView is about to open: "+url);
 	}
+	#else
+	public function new(source:String, toTrans:FlxState)
+		{
+			super();
+			nextState = toTrans;
+			FlxG.switchState(nextState);
+			//Windows offset adjustment purposes
+		}
+	#end
 }

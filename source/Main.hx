@@ -25,17 +25,12 @@ class Main extends Sprite
 
 	public static var watermarks = true; // Whether to put Kade Engine liteartly anywhere
 
-	#if android
 	public static var path = lime.system.System.applicationStorageDirectory; // path to storage folder
-	#end
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
 	{
-
-		// quick checks 
-
 		Lib.current.addChild(new Main());
 	}
 
@@ -77,7 +72,7 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		#if cpp
+		#if !mobile
 		initialState = TitleState; //No more cache, fuck you, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actaully no, actually yes, actually no
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		#else
