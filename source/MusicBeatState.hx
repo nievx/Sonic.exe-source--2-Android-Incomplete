@@ -12,8 +12,10 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
 import flixel.util.FlxTimer;
-import flixel.input.actions.FlxActionInput;
+#if mobileC
 import ui.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+#end
 
 class MusicBeatState extends FlxUIState
 {
@@ -27,6 +29,7 @@ class MusicBeatState extends FlxUIState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
+	#if mobileC
 	var _virtualpad:FlxVirtualPad;
 
 	var trackedinputs:Array<FlxActionInput> = [];
@@ -50,6 +53,9 @@ class MusicBeatState extends FlxUIState
 
 		super.destroy();
 	}
+	#else
+	public function addVirtualPad(?DPad, ?Action){};
+	#end
 
 	override function create()
 	{

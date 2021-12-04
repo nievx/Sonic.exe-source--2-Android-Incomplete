@@ -15,7 +15,6 @@ class UnlockScreen extends MusicBeatState
 
     public function new(isUnlocked:Bool, whichUnlocked:String)
     {
-
         if (whichUnlocked == 'soundtest')
         {
             if (isUnlocked)
@@ -35,11 +34,14 @@ class UnlockScreen extends MusicBeatState
         image.screenCenter();
         add(image);
 
-
         new FlxTimer().start(2, function(xd:FlxTimer)
         {
             FlxTween.tween(image, {alpha: 1}, 1);
         });
+        
+		#if mobileC
+		addVirtualPad(NONE, A);
+		#end
 
         super.create();
     }
@@ -48,9 +50,9 @@ class UnlockScreen extends MusicBeatState
     {
         if (controls.ACCEPT)
         {
-            LoadingState.loadAndSwitchState(new MainMenuState());
+			LoadingState.loadAndSwitchState(new MainMenuState());
         }
-
+        
         super.update(elapsed);
     }
 }

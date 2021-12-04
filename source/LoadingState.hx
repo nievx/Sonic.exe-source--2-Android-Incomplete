@@ -23,9 +23,9 @@ class LoadingState extends MusicBeatState
 	var stopMusic = false;
 	var callbacks:MultiCallback;
 	
-	var logo:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft = false;
+//	var logo:FlxSprite;
+//	var gfDance:FlxSprite;
+//	var danceLeft = false;
 	
 	function new(target:FlxState, stopMusic:Bool)
 	{

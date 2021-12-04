@@ -3,8 +3,10 @@ package;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
-import flixel.input.actions.FlxActionInput;
+#if mobileC
 import ui.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+#end
 
 class MusicBeatSubstate extends FlxSubState
 {
@@ -23,6 +25,7 @@ class MusicBeatSubstate extends FlxSubState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
+	#if mobileC
 	var _virtualpad:FlxVirtualPad;
 
 	var trackedinputs:Array<FlxActionInput> = [];
@@ -46,6 +49,9 @@ class MusicBeatSubstate extends FlxSubState
 
 		super.destroy();
 	}
+	#else
+	public function addVirtualPad(?DPad, ?Action){};
+	#end
 
 	override function update(elapsed:Float)
 	{

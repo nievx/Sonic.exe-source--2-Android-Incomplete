@@ -22,7 +22,6 @@ class CustomControlsState extends MusicBeatSubstate
 {
 
 	var _pad:FlxVirtualPad;
-	var _vpad:FlxVirtualPad;
 	var _hb:Hitbox;
 
 	var exitbutton:FlxUIButton;
@@ -33,7 +32,7 @@ class CustomControlsState extends MusicBeatSubstate
 	var down_text:FlxText;
 	var left_text:FlxText;
 	var right_text:FlxText;
-	var a_text:FlxText;
+	var thefunni_text:FlxText;
 
 	var inputvari:FlxText;
 
@@ -71,11 +70,10 @@ class CustomControlsState extends MusicBeatSubstate
 		
 
 		//pad
-		_pad = new FlxVirtualPad(RIGHT_FULL, A);
+		_pad = new FlxVirtualPad(RIGHT_FULL, NONE);
 		_pad.alpha = 0;
 		
-		_vpad = new FlxVirtualPad(NONE, A);
-		_vpad.alpha = 0.75;
+
 
 		//text inputvari
 		inputvari = new FlxText(125, 50, 0,controlitems[0], 48);
@@ -101,7 +99,6 @@ class CustomControlsState extends MusicBeatSubstate
 		down_text = new FlxText(200, 250, 0,"Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y, 24);
 		left_text = new FlxText(200, 300, 0,"Button left x:" + _pad.buttonLeft.x +" y:" + _pad.buttonLeft.y, 24);
 		right_text = new FlxText(200, 350, 0,"Button right x:" + _pad.buttonRight.x +" y:" + _pad.buttonRight.y, 24);
-		a_text = new FlxText(200, 400, 0,"button ATK x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y, 24);	
 		
 		//hitboxes
 
@@ -155,7 +152,7 @@ class CustomControlsState extends MusicBeatSubstate
 		add(down_text);
 		add(left_text);
 		add(right_text);
-		add(a_text);
+		add(thefunni_text);
 
 		// change selection
 		changeSelection();
@@ -220,14 +217,12 @@ class CustomControlsState extends MusicBeatSubstate
 	
 			switch curSelected{
 				case 0:
-					this.remove(_vpad);
 					this.remove(_pad);
 					_pad = null;
 					_pad = new FlxVirtualPad(RIGHT_FULL, A);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 1:
-					this.remove(_vpad);
 					this.remove(_pad);
 					_pad = null;
 					_pad = new FlxVirtualPad(FULL, A);
@@ -238,15 +233,12 @@ class CustomControlsState extends MusicBeatSubstate
 					_pad.alpha = 0;
 				case 3:
 					trace(3);
-					this.remove(_vpad);
 					this.add(_pad);
 					_pad.alpha = 0.75;
 					loadcustom();
 				case 4:
-					this.remove(_vpad);
 					remove(_pad);
-					this.add(_vpad);
-					_pad.alpha = 0.75;
+					_pad.alpha = 0;
 					_hb.visible = true;
 
 			}
@@ -314,6 +306,13 @@ class CustomControlsState extends MusicBeatSubstate
 
 				movebutton(touch, _pad.buttonLeft);
 			}
+
+			if (_pad.buttonA.justPressed) {
+				if (curSelected != 3)
+					changeSelection(0,3);
+
+				movebutton(touch, _pad.buttonA);
+			}
 		}
 	}
 
@@ -329,7 +328,6 @@ class CustomControlsState extends MusicBeatSubstate
 		down_text.text = "Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y;
 		left_text.text = "Button left x:" + _pad.buttonLeft.x +" y:" + _pad.buttonLeft.y;
 		right_text.text = "Button right x:" + _pad.buttonRight.x +" y:" + _pad.buttonRight.y;
-		a_text.text = "Button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y;	
 	}
 
 

@@ -12,7 +12,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import flixel.FlxCamera;
+import flash.system.System;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -158,6 +158,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			bfdeathshit.cameras = [coolcamera];
 			add(bfdeathshit);
 			bf.alpha = 0;
+			new FlxTimer().start(4, function(tmr:FlxTimer)
+			{
+				LoadingState.loadAndSwitchState(new VideoState('assets/videos/BfFuckingDies', new SoundTestMenu()));			});
 		}
 		else if (PlayState.SONG.song.toLowerCase() == 'black-sun')
 		{
@@ -203,15 +206,11 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
 
-		#if mobileC
-		addVirtualPad(NONE, A_B);
-		var camcontrol = new FlxCamera();
-		FlxG.cameras.add(camcontrol);
-		camcontrol.bgColor.alpha = 0;
-		_virtualpad.cameras = [camcontrol];
-		#end
-
 		bf.playAnim('firstDeath');
+		
+		#if mobileC
+        addVirtualPad(NONE, A_B);
+        #end
 	}
 
 	function startCountdown():Void
@@ -290,11 +289,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 					new FlxTimer().start(5.5, function(tmr:FlxTimer)
 					{
-						var content = [for (_ in 0...1000000) "FUN IS INFINITE"].join(" ");
-						var path = Paths.getUsersDesktop() + '/fun.txt';
-						if (!sys.FileSystem.exists(path) || (sys.FileSystem.exists(path) && sys.io.File.getContent(path) == content))
-							sys.io.File.saveContent(path, content);
-						Sys.exit(0);
+						System.exit(0);
 					});
 				});
 			case 'black-sun':
@@ -318,7 +313,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 				bfdeathshit.animation.finishCallback = function(amogus:String)
 				{
-					Sys.exit(0);
+					System.exit(0);
 				}
 		}
 	}

@@ -44,7 +44,6 @@ class TitleState extends MusicBeatState
 {
 	static var initialized:Bool = false;
 
-	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
@@ -64,11 +63,6 @@ class TitleState extends MusicBeatState
 		FlxG.mouse.visible = false;
 
 		FlxG.worldBounds.set(0, 0);
-
-		#if sys
-		if (!sys.FileSystem.exists(#if android Main.path #else Sys.getCwd() #end + "/assets/replays"))
-			sys.FileSystem.createDirectory(#if android Main.path #else Sys.getCwd() #end + "/assets/replays");
-		#end
 
 		@:privateAccess
 		{
@@ -122,10 +116,10 @@ class TitleState extends MusicBeatState
 		#end
 	}
 
-	var logoBl:FlxSprite;
+//	var logoBl:FlxSprite;
 	var logoBlBUMP:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft:Bool = false;
+//	var gfDance:FlxSprite;
+//	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
 	var bg:FlxSprite;
 
@@ -133,17 +127,16 @@ class TitleState extends MusicBeatState
 	{
 		if (!initialized)
 		{
-			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
+			/*var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
-
 			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
-				new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
+				new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
 			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
-				{asset: diamond, width: 32, height: 32}, new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
-
+				{asset: diamond, width: 32, height: 32}, new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
+				
 			transIn = FlxTransitionableState.defaultTransIn;
-			transOut = FlxTransitionableState.defaultTransOut;
+			transOut = FlxTransitionableState.defaultTransOut;*/
 
 			// HAD TO MODIFY SOME BACKEND SHIT
 			// IF THIS PR IS HERE IF ITS ACCEPTED UR GOOD TO GO
@@ -153,12 +146,15 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
-			FlxG.sound.music.fadeIn(5, 0, 0.7);
+			if(FlxG.sound.music == null) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+
+				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			}
 		}
 
-		Conductor.changeBPM(190);
+		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
 		bg = new FlxSprite(0, 0);
@@ -184,13 +180,15 @@ class TitleState extends MusicBeatState
 
 		add(logoBlBUMP);
 
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
+		FlxTween.tween(logoBlBUMP, {y: logoBlBUMP.y + 25}, 4, {ease: FlxEase.quadInOut, type: PINGPONG});
+
+	/*	gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
 		add(gfDance);
-		add(logoBl);
+		add(logoBl);*/
 
 		titleText = new FlxSprite(0, 0);
 		titleText.frames = Paths.getSparrowAtlas('titleEnterNEW');
@@ -202,6 +200,7 @@ class TitleState extends MusicBeatState
 		titleText.screenCenter();
 		// titleText.screenCenter(X);
 		add(titleText);
+		
 
 	//	var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 	//	logo.screenCenter();
@@ -215,9 +214,6 @@ class TitleState extends MusicBeatState
 		add(credGroup);
 		textGroup = new FlxGroup();
 
-		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		credGroup.add(blackScreen);
-
 		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
 		credTextShit.screenCenter();
 
@@ -225,13 +221,13 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+	/*ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
 		add(ngSpr);
 		ngSpr.visible = false;
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
+		ngSpr.antialiasing = true; */
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -277,12 +273,12 @@ class TitleState extends MusicBeatState
 
 
 		#if mobile
-			addVirtualPad(FULL, A);
-			if (controls.ACCEPT)
-			{
-				pressedEnter = true;
-			}
-		#end
+	//	addVirtualPad(FULL, A);
+		if (controls.ACCEPT)
+		{
+			pressedEnter = true;
+		}
+	#end
 
 		if (FlxG.keys.justPressed.UP || controls.UP_P)
 			if (code == 0)
@@ -324,13 +320,6 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.RED, 0.2);
 			FlxG.sound.play(Paths.sound('menumomentclick', 'exe'));
 			FlxG.sound.play(Paths.sound('menulaugh', 'exe'));
-
-			FlxTween.tween(bg, {alpha: 0}, 1);
-
-			new FlxTimer().start(1, function(tmr:FlxTimer)
-			{
-				FlxTween.tween(logoBlBUMP, {alpha: 0}, 1);
-			});
 
 			transitioning = true;
 			// FlxG.sound.music.stop();
@@ -400,29 +389,29 @@ class TitleState extends MusicBeatState
 	}
 
 	function playBoop1()
-	{
-		if (!skippedIntro)
 		{
-			FlxG.sound.play(Paths.sound('boop1', 'shared'));
+			if (!skippedIntro)
+				{
+					FlxG.sound.play(Paths.sound('boop1', 'shared'));
+				}
 		}
-	}
 
 	function playBoop2()
-	{
-		if (!skippedIntro)
 		{
-			FlxG.sound.play(Paths.sound('boop2', 'shared'));
+			if (!skippedIntro)
+				{
+					FlxG.sound.play(Paths.sound('boop2', 'shared'));
+				}
 		}
-	}
 
 	function playShow()
-	{
-		if (!skippedIntro)
 		{
-			FlxG.sound.play(Paths.sound('showMoment', 'shared'), .4);
+			if (!skippedIntro)
+				{
+					FlxG.sound.play(Paths.sound('showMoment', 'shared'), .4);
+				}
 		}
-	}
-
+	
 	override function beatHit()
 	{
 		super.beatHit();
@@ -434,7 +423,15 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(ngSpr);
+		//	remove(ngSpr);
+		//add(bg); //Mobile controls and a cool way to do this stuff btw
+		//O que que eu to falando? Eu literalmente só fiz isso porque estava bugando...
+		//Convenhamos, a ideia é legal kek
+		//add(logoBlBUMP);
+		//add(titleText); 
+			#if mobile
+			addVirtualPad(FULL, A);
+			#end
 
 			FlxG.sound.play(Paths.sound('showMoment', 'shared'), .4);
 

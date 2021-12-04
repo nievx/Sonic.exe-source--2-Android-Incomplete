@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -14,6 +15,7 @@ class GameOverState extends FlxTransitionableState
 	var bfY:Float = 0;
 
 	var coolcam:FlxCamera;
+	var coolcamera:FlxCamera;
 
 	public function new(x:Float, y:Float)
 	{
