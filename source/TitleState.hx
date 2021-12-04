@@ -199,7 +199,7 @@ class TitleState extends MusicBeatState
 		titleText.updateHitbox();
 		titleText.screenCenter();
 		// titleText.screenCenter(X);
-		add(titleText);
+		//add(titleText); //Lembrar de otimizar isso... É IMPORTANTE!!!
 		
 
 	//	var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
