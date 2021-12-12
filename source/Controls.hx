@@ -1,6 +1,5 @@
 package;
 
-import flixel.input.gamepad.FlxGamepad;
 import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;
@@ -8,12 +7,11 @@ import flixel.input.actions.FlxActionInput;
 import flixel.input.actions.FlxActionInputDigital;
 import flixel.input.actions.FlxActionManager;
 import flixel.input.actions.FlxActionSet;
-import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
-import ui.Hitbox;
-import ui.FlxVirtualPad;
 import flixel.ui.FlxButton;
+import ui.FlxVirtualPad;
+import ui.Hitbox;
 
 #if (haxe >= "4.0.0")
 enum abstract Action(String) to String from String
@@ -31,10 +29,10 @@ enum abstract Action(String) to String from String
 	var RIGHT_R = "right-release";
 	var DOWN_R = "down-release";
 	var ACCEPT = "accept";
+	var DARING = 'daring';
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
-	var CHEAT = "cheat";
 
 	var SPACEB = 'space';
 	var SPACE_P = 'space-press';
@@ -57,10 +55,10 @@ abstract Action(String) to String from String
 	var RIGHT_R = "right-release";
 	var DOWN_R = "down-release";
 	var ACCEPT = "accept";
+	var DARING = 'daring';
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
-	var CHEAT = "cheat";
 
 	var SPACEB = 'space';
 	var SPACE_P = 'space-press';
@@ -87,9 +85,9 @@ enum Control
 	DOWN;
 	RESET;
 	ACCEPT;
+	DARING;
 	BACK;
 	PAUSE;
-	CHEAT;
 	SPACEB;
 }
 
@@ -120,10 +118,10 @@ class Controls extends FlxActionSet
 	var _rightR = new FlxActionDigital(Action.RIGHT_R);
 	var _downR = new FlxActionDigital(Action.DOWN_R);
 	var _accept = new FlxActionDigital(Action.ACCEPT);
+	var _daring = new FlxActionDigital(Action.DARING);
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
-	var _cheat = new FlxActionDigital(Action.CHEAT);
 
 	var _space = new FlxActionDigital(Action.SPACEB);
 	var _spaceP = new FlxActionDigital(Action.SPACE_P);
@@ -203,6 +201,11 @@ class Controls extends FlxActionSet
 	inline function get_ACCEPT()
 		return _accept.check();
 
+	public var DARING(get, never):Bool;
+
+	inline function get_DARING()
+		return _daring.check();
+
 	public var BACK(get, never):Bool;
 
 	inline function get_BACK()
@@ -217,11 +220,6 @@ class Controls extends FlxActionSet
 
 	inline function get_RESET()
 		return _reset.check();
-
-	public var CHEAT(get, never):Bool;
-
-	inline function get_CHEAT()
-		return _cheat.check();
 
 	public var SPACEB(get, never):Bool;
 
@@ -256,10 +254,10 @@ class Controls extends FlxActionSet
 		add(_rightR);
 		add(_downR);
 		add(_accept);
+		add(_daring);
 		add(_back);
 		add(_pause);
 		add(_reset);
-		add(_cheat);
 
 		add(_space);
 		add(_spaceP);
@@ -288,10 +286,10 @@ class Controls extends FlxActionSet
 		add(_rightR);
 		add(_downR);
 		add(_accept);
+		add(_daring);
 		add(_back);
 		add(_pause);
 		add(_reset);
-		add(_cheat);
 
 		add(_space);
 		add(_spaceP);
@@ -356,6 +354,8 @@ class Controls extends FlxActionSet
 		{
 			case A:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
+			case X:
+				inline forEachBound(Control.DARING, (action, state) -> addbutton(action, virtualPad.buttonX, state));
 			case A_B:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
@@ -399,7 +399,9 @@ class Controls extends FlxActionSet
 		switch (Action)
 		{
 			case A:
-				inline forEachBound(Control.SPACEB, (action, state) -> addbutton(action, virtualPad.buttonA, state));
+				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
+			case X:
+				inline forEachBound(Control.DARING, (action, state) -> addbutton(action, virtualPad.buttonX, state));
 			case A_B:
 				inline forEachBound(Control.SPACEB, (action, state) -> addbutton(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
@@ -489,10 +491,10 @@ class Controls extends FlxActionSet
 			case LEFT: _left;
 			case RIGHT: _right;
 			case ACCEPT: _accept;
+			case DARING: _daring;
 			case BACK: _back;
 			case PAUSE: _pause;
 			case RESET: _reset;
-			case CHEAT: _cheat;
 
 			case SPACEB: _space;
 		}
@@ -532,14 +534,14 @@ class Controls extends FlxActionSet
 				func(_downR, JUST_RELEASED);
 			case ACCEPT:
 				func(_accept, JUST_PRESSED);
+			case DARING:
+				func(_daring, JUST_PRESSED);
 			case BACK:
 				func(_back, JUST_PRESSED);
 			case PAUSE:
 				func(_pause, JUST_PRESSED);
 			case RESET:
 				func(_reset, JUST_PRESSED);
-			case CHEAT:
-				func(_cheat, JUST_PRESSED);
 
 			case SPACEB:
 				func(_space, PRESSED);
@@ -772,6 +774,7 @@ class Controls extends FlxActionSet
 		buttons.set(Control.DOWN,[FlxGamepadInputID.fromString(FlxG.save.data.gpdownBind)]);
 		buttons.set(Control.RIGHT,[FlxGamepadInputID.fromString(FlxG.save.data.gprightBind)]);
 		buttons.set(Control.ACCEPT,[FlxGamepadInputID.A]);
+		buttons.set(Control.DARING,[FlxGamepadInputID.X]);
 		buttons.set(Control.BACK,[FlxGamepadInputID.B]);
 		buttons.set(Control.PAUSE,[FlxGamepadInputID.START]);
 		buttons.set(Control.SPACEB,[FlxGamepadInputID.fromString(FlxG.save.data.gpmiddleBind)]);
@@ -783,6 +786,7 @@ class Controls extends FlxActionSet
 		inline bindKeys(Control.LEFT, [FlxKey.fromString(FlxG.save.data.leftBind), FlxKey.LEFT]);
 		inline bindKeys(Control.RIGHT, [FlxKey.fromString(FlxG.save.data.rightBind), FlxKey.RIGHT]);
 		inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+		inline bindKeys(Control.DARING, [Z, SPACE, ENTER]);
 		inline bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 		inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
 		inline bindKeys(Control.RESET, [FlxKey.fromString(FlxG.save.data.killBind)]);
@@ -853,6 +857,7 @@ class Controls extends FlxActionSet
 		#if !switch
 		addGamepadLiteral(id, [
 			Control.ACCEPT => [A],
+			Control.DARING => [X],
 			Control.BACK => [B],
 			Control.UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP],
 			Control.DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
@@ -865,6 +870,7 @@ class Controls extends FlxActionSet
 		addGamepadLiteral(id, [
 			//Swap A and B for switch
 			Control.ACCEPT => [B],
+			Control.DARING => [X],
 			Control.BACK => [A],
 			Control.UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP],
 			Control.DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN],
@@ -873,7 +879,6 @@ class Controls extends FlxActionSet
 			Control.PAUSE => [START],
 			//Swap Y and X for switch
 			Control.RESET => [Y],
-			Control.CHEAT => [X]
 		]);
 		#end
 	}

@@ -8,7 +8,7 @@ class Ratings
 		if(FlxG.save.data.botplay && !PlayState.loadRep)
 			ranking = "BotPlay";
 
-        if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
+       /* if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
             ranking = "(MFC)";
         else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
             ranking = "(GFC)";
@@ -16,8 +16,8 @@ class Ratings
             ranking = "(FC)";
         else if (PlayState.misses < 10) // Single Digit Combo Breaks
             ranking = "(SDCB)";
-        else
-            ranking = "(Clear)";
+        else */
+            ranking = "";
 
         // WIFE TIME :)))) (based on Wife3)
 
@@ -142,10 +142,10 @@ class Ratings
         return
          (FlxG.save.data.npsDisplay ?																							// NPS Toggle
          "NPS: " + nps + " (Max " + maxNPS + ")" + (!PlayStateChangeables.botPlay || PlayState.loadRep ? " | " : "") : "") +								// 	NPS
-         (!PlayStateChangeables.botPlay || PlayState.loadRep ? "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + 		// Score
+         (!PlayStateChangeables.botPlay || PlayState.loadRep ? "Pontuação:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + 		// Score
          (FlxG.save.data.accuracyDisplay ?																						// Accuracy Toggle
-         " | Combo Breaks:" + PlayState.misses + 																				// 	Misses/Combo Breaks
-         " | Accuracy:" + (PlayStateChangeables.botPlay && !PlayState.loadRep ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// 	Accuracy
-         " | " + GenerateLetterRank(accuracy) : "") : ""); 																		// 	Letter Rank
+         " | Erros:" + PlayState.misses + 																				// 	Misses/Combo Breaks
+         " | Precisão:" + (PlayStateChangeables.botPlay && !PlayState.loadRep ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// 	Accuracy
+         " | " + GenerateLetterRank(accuracy) : "") : ""); 																// 	Letter Rank
     }
 }

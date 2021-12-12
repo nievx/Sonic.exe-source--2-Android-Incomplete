@@ -1,43 +1,40 @@
 package;
 
-import lime.app.Promise;
-import lime.app.Future;
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxTimer;
-
-import openfl.utils.Assets;
-import lime.utils.Assets as LimeAssets;
+import haxe.io.Path;
+import lime.app.Future;
+import lime.app.Promise;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
+import lime.utils.Assets as LimeAssets;
+import openfl.utils.Assets;
 
-import haxe.io.Path;
 
 class LoadingState extends MusicBeatState
 {
 	inline static var MIN_TIME = 1.0;
-	
+
 	var target:FlxState;
 	var stopMusic = false;
 	var callbacks:MultiCallback;
-	
+
 //	var logo:FlxSprite;
 //	var gfDance:FlxSprite;
 //	var danceLeft = false;
-	
-	function new(target:FlxState, stopMusic:Bool)
+
+function new(target:FlxState, stopMusic:Bool)
 	{
 		super();
 		this.target = target;
 		this.stopMusic = stopMusic;
 	}
-	
+
 	override function create()
 	{
-		
-	/*	logo = new FlxSprite(-150, -100);
+	
+			/*	logo = new FlxSprite(-150, -100);
 		logo.frames = Paths.getSparrowAtlas('logoBumpin');
 		logo.antialiasing = true;
 		logo.animation.addByPrefix('bump', 'logo bumpin', 24);
@@ -53,19 +50,21 @@ class LoadingState extends MusicBeatState
 		gfDance.antialiasing = true;
 		add(gfDance);
 		add(logo); */
-		
+
 		initSongsManifest().onComplete
 		(
 			function (lib)
 			{
 				callbacks = new MultiCallback(onLoad);
 				var introComplete = callbacks.add("introComplete");
-				checkLoadSong(getSongPath());
-				if (PlayState.SONG.needsVoices)
-					checkLoadSong(getVocalPath());
+				if (PlayState.SONG != null) {
+					checkLoadSong(getSongPath());
+					if (PlayState.SONG.needsVoices)
+						checkLoadSong(getVocalPath());
+				}
 				checkLibrary("shared");
 				checkLibrary('exe');
-				
+
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
 				new FlxTimer().start(fadeTime + MIN_TIME, function(_) introComplete());
@@ -89,47 +88,47 @@ class LoadingState extends MusicBeatState
 	}
 	
 	function checkLibrary(library:String)
-	{
+		{
 		trace(Assets.hasLibrary(library));
 		if (Assets.getLibrary(library) == null)
 		{
 			@:privateAccess
 			if (!LimeAssets.libraryPaths.exists(library))
 				throw "Missing library: " + library;
-			
+
 			var callback = callbacks.add("library:" + library);
 			Assets.loadLibrary(library).onComplete(function (_) { callback(); });
 		}
 	}
 	
 	override function beatHit()
-	{
-		super.beatHit();
+		{
+			super.beatHit();
+			
+		/*	logo.animation.play('bump');
+			danceLeft = !danceLeft;
+			
+			if (danceLeft)
+				gfDance.animation.play('danceRight');
+			else
+				gfDance.animation.play('danceLeft'); */
+		}
 		
-	/*	logo.animation.play('bump');
-		danceLeft = !danceLeft;
-		
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft'); */
-	}
-	
 	override function update(elapsed:Float)
-	{
-		super.update(elapsed);
-		#if debug
-		if (FlxG.keys.justPressed.SPACE)
-			trace('fired: ' + callbacks.getFired() + " unfired:" + callbacks.getUnfired());
-		#end
-	}
+		{
+			super.update(elapsed);
+			#if debug
+			if (FlxG.keys.justPressed.SPACE)
+				trace('fired: ' + callbacks.getFired() + " unfired:" + callbacks.getUnfired());
+			#end
+		}
 	
 	function onLoad()
 	{
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 		
-		FlxG.switchState(target);
+		MusicBeatState.switchState(target);
 	}
 	
 	static function getSongPath()
@@ -144,25 +143,25 @@ class LoadingState extends MusicBeatState
 	
 	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)
 	{
-		FlxG.switchState(getNextState(target, stopMusic));
+		MusicBeatState.switchState(getNextState(target, stopMusic));
 	}
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
-	{
-		Paths.setCurrentLevel('exe');
-		#if NO_PRELOAD_ALL
-		var loaded = isSoundLoaded(getSongPath())
-			&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
-			&& isLibraryLoaded("shared");
-		
-		if (!loaded)
-			return new LoadingState(target, stopMusic);
-		#end
-		if (stopMusic && FlxG.sound.music != null)
-			FlxG.sound.music.stop();
-		
-		return target;
-	}
+		{
+			Paths.setCurrentLevel('exe');
+			#if NO_PRELOAD_ALL
+			var loaded = isSoundLoaded(getSongPath())
+				&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
+				&& isLibraryLoaded("shared");
+			
+			if (!loaded)
+				return new LoadingState(target, stopMusic);
+			#end
+			if (stopMusic && FlxG.sound.music != null)
+				FlxG.sound.music.stop();
+			
+			return target;
+		}
 	
 	#if NO_PRELOAD_ALL
 	static function isSoundLoaded(path:String):Bool

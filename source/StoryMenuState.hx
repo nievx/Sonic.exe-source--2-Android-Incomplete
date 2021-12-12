@@ -2,20 +2,12 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxGroup;
-import flixel.math.FlxMath;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
 
 using StringTools;
+
 
 #if windows
 import Discord.DiscordClient;
@@ -274,7 +266,7 @@ class StoryMenuState extends MusicBeatState
 		if (controls.BACK && oneclickpls)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			FlxG.switchState(new MainMenuState());
+			MusicBeatState.switchState(new MainMenuState());
 		}
 
 		if (controls.ACCEPT)
@@ -340,9 +332,7 @@ class StoryMenuState extends MusicBeatState
 				{
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 						{
-							FlxG.camera.fade(FlxColor.BLACK, 1, false, function(){
-									LoadingState.loadAndSwitchState(new VideoState('assets/videos/tooslowcutscene1', new PlayState())); 
-							});
+							LoadingState.loadAndSwitchState(new VideoState('assets/videos/tooslowcutscene1', new PlayState())); 
 						});
 				}
 			}

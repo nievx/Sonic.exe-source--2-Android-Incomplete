@@ -1,11 +1,10 @@
 package;
 
 import Conductor.BPMChangeEvent;
-import flixel.FlxG;
 import flixel.FlxSubState;
 #if mobileC
-import ui.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
+import ui.FlxVirtualPad;
 #end
 
 class MusicBeatSubstate extends FlxSubState
@@ -43,7 +42,7 @@ class MusicBeatSubstate extends FlxSubState
 		controls.addAndroidBack();
 		#end
 	}
-
+	
 	override function destroy() {
 		controls.removeFlxInput(trackedinputs);
 

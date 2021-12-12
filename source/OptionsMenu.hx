@@ -1,26 +1,19 @@
 package;
 
-import flixel.FlxCamera;
-import cpp.abi.Abi;
-import flixel.util.FlxTimer;
-import flixel.input.gamepad.FlxGamepad;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import openfl.Lib;
 import Options;
-import Controls.Control;
-import flash.text.TextField;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
-import flixel.math.FlxMath;
+import flixel.input.gamepad.FlxGamepad;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
+import flixel.util.FlxTimer;
 
 using StringTools;
+
 
 class OptionsMenu extends MusicBeatState
 {
@@ -33,52 +26,51 @@ class OptionsMenu extends MusicBeatState
 
 
 	var options:Array<OptionCategory> = [
-		new OptionCategory("Sonic exe", [
-			new JumpscareOption("Displays jumpscares in some songs (this affects the gameplay preformance by alot)"),
-			new Vfx("Enables special visual effects (turning it off helps with memory and preformace)"),
-			new SplashOption("Enables splattering blood on SICK! hits."),
-			new CamMove("Makes the camera move to the notes you or your opponent presses."),
-			new LowQuality('Removes parts of the stage in order to achieve smoother gameplay.')
+		new OptionCategory("Sonic APK", [
+			new JumpscareOption("Liga ou desliga os sustins. Pode desligar, sei que você não tanka..."),
+			new Vfx("Ativa alguns efeitos especiais, desligue isso para melhorar a performance."),
+			new SplashOption("Sanguinho quando tu acertar uma nota, desligue isso para melhorar a performance."),
+			new CamMove("Faz a Camera se mover no sentido da nota que você acertou, desligue isso para melhorar a performance."),
+			new LowQuality('Remove partes do cenário para melhorar a performance, ligue isso para melhorar a performance.')
 		]),
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
-			new DownscrollOption("Change the layout of the strumline."),
-			new MiddlescrollOption("Sets the strumline to the middle of the screen and hides the opponent's."),
-			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
-			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
+			new DownscrollOption("Auto-Explicativo eu acho..."),
+			new MiddlescrollOption("Remove as setas do oponente e coloca as suas no meio da tela"),
+			new GhostTapOption("Basicamente não te pune por apertar uma nota fora de hora."),
+			new Judgement("Customize seu tempo de resposta, MEXA NISSO SE TIVER UM TECLADO DIFERENCIADO (Esquerda ou direita)"),
 			#if desktop
 			new FPSCapOption("Cap your FPS"),
 			#end
-			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
-			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
+			new ScrollSpeedOption("Muda a Velocidade das notas (1 = Dependente da chart)"),
+			new AccuracyDOption("Muda como a precisão é calculada"),
 		//	new ResetButtonOption("Toggle pressing R to gameover."),
 			// new OffsetMenu("Get a note offset based off of your inputs!"),
 		//	new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
 		]),
-		new OptionCategory("Appearance", [
-			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
-			new CamZoomOption("Toggle the camera zoom in-game."),
-			new RainbowFPSOption("Make the FPS Counter Rainbow"),
-			new AccuracyOption("Display accuracy information."),
-			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position (as a bar)"),
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
+		new OptionCategory("Aparencia", [
+			//new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
+			new CamZoomOption("Tira o zoom da camera dentro do jooj."),
+			new RainbowFPSOption("Faça seu FPS sair do Armário"),
+			new AccuracyOption("Mostra informações da precisão."),
+			new NPSDisplayOption("Mostra a quantidade de notas por segundo vindo."),
+			new SongPositionOption("Mostra seu tempo na musica (como uma barra)"),
+			new CpuStrums("As notas da CPU fazem brilhin."),
 		]),
 		
-		new OptionCategory("Misc", [
-			new FPSOption("Toggle the FPS Counter"),
+		new OptionCategory("Trens", [
+			new FPSOption(""),
 			//new ReplayOption("View replays"),
-			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
-			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new ShowInput("Display every single input in the score screen."),
-			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
-			new BotPlay("Showcase your charts and mods with autoplay."),
-			new RealBot('The coolest botplay')
+			new FlashingLightsOption("Ative essa opção caso não queira ter problemas com o chuvisco e talz"),
+			//new WatermarkOption("Enable and disable all watermarks from the engine."),
+			//new ShowInput("Display every single input in the score screen."),
+			new Optimization("Ligue isso se teu celular for bem... MAS TIPO BEM RUIM MERMO"),
+			new BotPlay("CONFIA POH, EU Já ZOEI CONTIGO ALGUMA VEZ? Não responda ;-;"),
+			new RealBot('O MELHOR JOGADOR DO MUNDO, APENAS Só perde pro Silver, CONFIA!!!')
 		]) #if mobileC ,
 
-		new OptionCategory("Mobile settings", [
-			new CustomControls("edit a control"),
-			new About("about android port")
+		new OptionCategory("Mobile", [
+			new CustomControls("Customize seus controles")
 		]) #end
 		
 	];
@@ -94,9 +86,9 @@ class OptionsMenu extends MusicBeatState
 	override function create()
 	{
 		instance = this;
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBGBlue"));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("BackGROUND2"));
 
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		menuBG.setGraphicSize(1280, 720);
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = true;
@@ -148,7 +140,7 @@ class OptionsMenu extends MusicBeatState
 		{
 			if (controls.BACK && !isCat)
 				{
-				FlxG.switchState(new MainMenuState());
+				MusicBeatState.switchState(new MainMenuState());
 				trace("back to da menu");
 				}
 			else if (controls.BACK)
@@ -303,7 +295,7 @@ class OptionsMenu extends MusicBeatState
 			else if (!canselect && cheat && controls.ACCEPT)
 			{
 				FlxG.sound.music.play();
-				FlxG.switchState(new OptionsMenu());
+				MusicBeatState.switchState(new OptionsMenu());
 			}
 		}
 		FlxG.save.flush();

@@ -1,43 +1,46 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.FlxCamera;
-import flixel.input.gamepad.FlxGamepad;
-import openfl.Lib;
-#if windows
-import llua.Lua;
-#end
-import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import openfl.Lib;
+#if windows
+import llua.Lua;
+#end
 
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Continuar', 'Reiniciar', (PlayState.SONG.song.toLowerCase() == 'you-cant-run' ?  'Nao Existe Fuga' : 'Voltar para o Menu')]; //Sim, isso é uma referônzia a liga das lendas
 	var curSelected:Int = 0;
 
+	public static var cantescapecounter:Int = 0;
+
+
+	var paradetocaressmerda:Bool = true;
 	var pauseMusic:FlxSound;
+	var fuga:FlxSound;
 	var perSongOffset:FlxText;
 	
 	var offsetChanged:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
+		
 		super();
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
+		fuga = new FlxSound().loadEmbedded(Paths.sound('deniedMOMENT'), true, true);
+		//E eu lhe respondo, eu estava com preguiça... Mas não tive preguiça de escrever este belo texto
 
 		FlxG.sound.list.add(pauseMusic);
 
@@ -109,7 +112,6 @@ class PauseSubState extends MusicBeatSubstate
 		super.update(elapsed);
 
 		var oldOffset:Float = 0;
-		var accepted = controls.ACCEPT;
 
 		/*
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
@@ -160,7 +162,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+					menuItems = ['Reiniciar', 'Nao Existe Fuga', 'Voltar para o Menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -185,7 +187,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+					menuItems = ['Reiniciar', 'Nao Existe Fuga', 'Voltar para o Menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -203,17 +205,29 @@ class PauseSubState extends MusicBeatSubstate
 			}
 		#end
 
-		if (accepted)
+		if (controls.ACCEPT)
 		{
 			var daSelected:String = menuItems[curSelected];
 
 			switch (daSelected)
 			{
-				case "Resume":
+				case "Continuar":
 					close();
-				case "Restart Song":
+				case "Reiniciar":
 					FlxG.resetState();
-				case "Exit to menu":
+				case "Nao Existe Fuga":
+					if(paradetocaressmerda){
+					fuga.play();
+					paradetocaressmerda = false;
+					}
+					new FlxTimer().start(0.8, function(tmr:FlxTimer)
+						{
+							paradetocaressmerda = true;
+						});
+					if(cantescapecounter < 12)
+						cantescapecounter++;
+						fuga.volume = (1 / (12 - cantescapecounter));
+				case "Voltar para o Menu":
 					if(PlayState.loadRep)
 					{
 						FlxG.save.data.botplay = false;
@@ -245,6 +259,7 @@ class PauseSubState extends MusicBeatSubstate
 	override function destroy()
 	{
 		pauseMusic.destroy();
+		fuga.destroy();
 
 		super.destroy();
 	}

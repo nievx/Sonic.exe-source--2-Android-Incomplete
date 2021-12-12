@@ -1,27 +1,23 @@
 package;
 
-import flixel.util.FlxTimer;
-import flixel.input.gamepad.FlxGamepad;
-import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.math.FlxMath;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+import flixel.input.gamepad.FlxGamepad;
 import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import lime.utils.Assets;
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+
+using StringTools;
 
 
 #if windows
 import Discord.DiscordClient;
 #end
 
-using StringTools;
 
 class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!!!
 {
@@ -47,7 +43,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		whiteshit = new FlxSprite().makeGraphic(1280, 720, FlxColor.WHITE);
 		whiteshit.alpha = 0;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('backgroundlool'));
+		bg = new FlxSprite().loadGraphic(Paths.image('BackGROUND'));
 		bg.screenCenter();
 		bg.setGraphicSize(1280, 720);
 		add(bg);
@@ -166,7 +162,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		
 		if (controls.BACK)
 		{
-			FlxG.switchState(new MainMenuState());
+			MusicBeatState.switchState(new MainMenuState());
 		}
 		
 		
@@ -188,7 +184,7 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = 2;
 			PlayState.storyWeek = 1;
-			FlxTween.tween(whiteshit, {alpha: 1}, 0.4);
+			FlxTween.tween(FlxG.camera, {y:3000}, 3.4, {ease: FlxEase.expoInOut}); //Yeah it's a lot prettier now
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;

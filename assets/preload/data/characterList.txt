@@ -6,6 +6,7 @@ sonic
 sonic.exe
 sonicfun
 sonicLordX
+sonicLordXold
 sunky
 TDoll
 bf-SS

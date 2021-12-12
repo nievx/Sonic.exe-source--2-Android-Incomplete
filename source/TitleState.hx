@@ -2,42 +2,25 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.transition.TransitionData;
-import flixel.graphics.FlxGraphic;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
-import flixel.input.gamepad.FlxGamepad;
-import flixel.input.gamepad.mappings.MayflashWiiRemoteMapping;
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-import flixel.system.FlxSound;
-import flixel.system.ui.FlxSoundTray;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase.EaseFunction;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-#if newgrounds
-import io.newgrounds.NG;
-#end
-import lime.app.Application;
 import openfl.Assets;
 
 using StringTools;
+#if newgrounds
+import io.newgrounds.NG;
+#end
 
 #if sys
-import smTools.SMFile;
 #end
 #if windows
 import Discord.DiscordClient;
 #end
 #if cpp
-import sys.thread.Thread;
 #end
 
 class TitleState extends MusicBeatState
@@ -167,7 +150,7 @@ class TitleState extends MusicBeatState
 		bg.antialiasing = true;
 		bg.updateHitbox();
 		bg.screenCenter();
-		add(bg);
+		//add(bg);
 
 		logoBlBUMP = new FlxSprite(0, 0);
 		logoBlBUMP.loadGraphic(Paths.image('Logo', 'exe'));
@@ -178,17 +161,9 @@ class TitleState extends MusicBeatState
 
 		logoBlBUMP.screenCenter();
 
-		add(logoBlBUMP);
+		//add(logoBlBUMP);
 
 		FlxTween.tween(logoBlBUMP, {y: logoBlBUMP.y + 25}, 4, {ease: FlxEase.quadInOut, type: PINGPONG});
-
-	/*	gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
-		add(gfDance);
-		add(logoBl);*/
 
 		titleText = new FlxSprite(0, 0);
 		titleText.frames = Paths.getSparrowAtlas('titleEnterNEW');
@@ -196,19 +171,18 @@ class TitleState extends MusicBeatState
 		titleText.animation.addByPrefix('press', "ENTER PRESSED instance 1", 24, false);
 		titleText.antialiasing = true;
 		titleText.animation.play('idle');
+		titleText.setGraphicSize(Std.int(titleText.width *2));
 		titleText.updateHitbox();
 		titleText.screenCenter();
 		// titleText.screenCenter(X);
-		//add(titleText); //Lembrar de otimizar isso... É IMPORTANTE!!!
-		
 
 	//	var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 	//	logo.screenCenter();
 	//	logo.antialiasing = true;
-		// add(logo);
+	//  add(logo);
 
-		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
-		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
+	// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+	// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
 		credGroup = new FlxGroup();
 		add(credGroup);
@@ -271,14 +245,10 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = controls.ACCEPT;
 
-
-		#if mobile
-	//	addVirtualPad(FULL, A);
 		if (controls.ACCEPT)
 		{
 			pressedEnter = true;
 		}
-	#end
 
 		if (FlxG.keys.justPressed.UP || controls.UP_P)
 			if (code == 0)
@@ -329,8 +299,11 @@ class TitleState extends MusicBeatState
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 1, false, function(){
+					if(!FlxG.save.data.watermark){ //Eu irei te obrigar a colocar isso mermo então sodasse
 						LoadingState.loadAndSwitchState(new VideoState('assets/videos/bothCreditsAndIntro', new MainMenuState()));
-				});
+					} else {FlxG.save.data.watermark = true; FlxG.switchState(new MainMenuState());}
+				
+					});
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
@@ -423,12 +396,14 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-		//	remove(ngSpr);
+		//remove(ngSpr);
 		//add(bg); //Mobile controls and a cool way to do this stuff btw
 		//O que que eu to falando? Eu literalmente só fiz isso porque estava bugando...
 		//Convenhamos, a ideia é legal kek
 		//add(logoBlBUMP);
-		//add(titleText); 
+		add(bg);
+		add(logoBlBUMP);
+		add(titleText); //Now it's done
 			#if mobile
 			addVirtualPad(FULL, A);
 			#end

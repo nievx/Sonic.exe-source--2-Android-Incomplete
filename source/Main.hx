@@ -1,12 +1,9 @@
 package;
 
-import openfl.display.BlendMode;
-import openfl.text.TextFormat;
-import openfl.display.Application;
-import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.util.FlxColor;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
@@ -80,12 +77,7 @@ class Main extends Sprite
 		gameHeight = 720;
 		zoom = 1;
 		
-		#if (cpp && !mobile)
-		initialState = Caching; //change back to Caching once done with testing
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
-		#else
-		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
-		#end
 		addChild(game);
 
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";

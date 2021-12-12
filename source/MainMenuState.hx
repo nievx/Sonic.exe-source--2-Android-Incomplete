@@ -1,28 +1,30 @@
 package;
 
-import flixel.input.gamepad.FlxGamepad;
 import Controls.KeyboardScheme;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.input.gamepad.FlxGamepad;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import lime.app.Application;
+
+using StringTools;
 #if newgrounds
 import io.newgrounds.NG;
 #end
-import lime.app.Application;
-
 #if windows
 import Discord.DiscordClient;
 #end
 
-using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
@@ -83,19 +85,19 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('backgroundlool'));
+		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('BackGROUND'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0;
-		bg.setGraphicSize(Std.int(bg.width * .5));
+		bg.setGraphicSize(1280, 720);
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = true;
 		add(bg);
 
-		bgdesat = new FlxSprite(-80).loadGraphic(Paths.image('backgroundlool2'));
+		bgdesat = new FlxSprite(-80).loadGraphic(Paths.image('BackGROUND2'));
 		bgdesat.scrollFactor.x = 0;
 		bgdesat.scrollFactor.y = 0;
-		bgdesat.setGraphicSize(Std.int(bgdesat.width * .5));
+		bgdesat.setGraphicSize(1280, 720);
 		bgdesat.updateHitbox();
 		bgdesat.screenCenter();
 		bgdesat.visible = false;
@@ -171,12 +173,12 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + kadeEngineVer + " Kade Engine" : ""), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0,(" Portado para Android por Matheus Silver"), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		var dataerase:FlxText = new FlxText(FlxG.width - 300, FlxG.height - 18 * 2, 300, "Hold DEL to erase ALL data (this doesn't include ALL options)", 3);
+		var dataerase:FlxText = new FlxText(FlxG.width - 300, FlxG.height - 18 * 2, 300, "", 3);
 		dataerase.scrollFactor.set();
 		dataerase.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(dataerase);
@@ -193,6 +195,10 @@ class MainMenuState extends MusicBeatState
 
 		#if mobileC
 		addVirtualPad(UP_DOWN, A); //No second chances for ya
+		var camcontrol = new FlxCamera();
+		FlxG.cameras.add(camcontrol);
+		camcontrol.bgColor.alpha = 0;
+		_virtualpad.cameras = [camcontrol];
 		#end
 
 		super.create();
@@ -207,8 +213,8 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.save.data.storyProgress = 1;
 			FlxG.save.data.soundTestUnlocked = true;
-			FlxG.save.data.songArray = ["endless", 'cycles',"milk", "sunshine", 'faker', 'black-sun', "chaos"];
-			FlxG.switchState(new MainMenuState());
+			FlxG.save.data.songArray = [];
+			MusicBeatState.switchState(new MainMenuState());
 		}
 		#end
 
@@ -223,7 +229,7 @@ class MainMenuState extends MusicBeatState
 					FlxG.save.data.storyProgress = 0; // lol.
 					FlxG.save.data.soundTestUnlocked = false;
 					FlxG.save.data.songArray = [];
-					FlxG.switchState(new MainMenuState());
+					MusicBeatState.switchState(new MainMenuState());
 				}
 				if (FlxG.keys.pressed.DELETE)
 				{
@@ -286,12 +292,12 @@ class MainMenuState extends MusicBeatState
 				changeItem(1);
 			}
 
-			if (controls.BACK)
+		/*	if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				MusicBeatState.switchState(new TitleState());
 
 			}
-
+			*/
 
 			if (controls.ACCEPT)
 			{
@@ -365,18 +371,18 @@ class MainMenuState extends MusicBeatState
 		switch (daChoice)
 		{
 			case 'story mode':
-				FlxG.switchState(new StoryMenuState());
+				MusicBeatState.switchState(new StoryMenuState());
 				trace("Story Menu Selected");
 			case 'freeplay':
-				FlxG.switchState(new FreeplayState());
+				MusicBeatState.switchState(new FreeplayState());
 
 				trace("Freeplay Menu Selected");
 
 			case 'options':
-				FlxG.switchState(new OptionsMenu());
+				MusicBeatState.switchState(new OptionsMenu());
 				trace("going to da options");
 			case 'sound test':
-				FlxG.switchState(new SoundTestMenu());
+				MusicBeatState.switchState(new SoundTestMenu());
 				trace("going to da sound test menu");
 		}
 	}

@@ -4,15 +4,13 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import flash.system.System;
+import openfl.system.System;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -52,7 +50,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		super();
 
 		Conductor.songPosition = 0;
-
+		
 		bluevg = new FlxSprite();
 		bluevg.loadGraphic(Paths.image('blueVg'));
 		bluevg.alpha = 0;
@@ -79,76 +77,65 @@ class GameOverSubstate extends MusicBeatSubstate
 
 			bfdeathshit.alpha = 0;
 		}
-
+		
 		bf = new Boyfriend(x, y, daBf);
 
 		if (PlayState.SONG.song == 'endless')
-		{
-			majinBf = new Boyfriend(x, y, 'bf-blue');
-			majinBf.visible = false;
-			majinBf.antialiasing = true;
-			add(majinBf);
-		}
+			{
+				majinBf = new Boyfriend(x, y, 'bf-blue');
+				majinBf.visible = false;
+				majinBf.antialiasing = true;
+				add(majinBf);
+			}
 
 		if (PlayState.SONG.song == 'too-slow' || PlayState.SONG.song == 'you-cant-run' || PlayState.SONG.song == 'triple-trouble')
 		{
-			sonicDEATH = new SonicDeathAnimation(Std.int(bf.x) - 80, Std.int(bf.y) - 350);
+		sonicDEATH = new SonicDeathAnimation(Std.int(bf.x) - 100, Std.int(bf.y) - 350);
+		
+		sonicDEATH.scale.x = 2;
+		sonicDEATH.scale.y = 2;
 
-			sonicDEATH.scale.x = 2;
-			sonicDEATH.scale.y = 2;
+		sonicDEATH.antialiasing = true;
+		sonicDEATH.playAnim('firstDEATH');
+		add(sonicDEATH);
+	}
 
-			sonicDEATH.antialiasing = true;
-			sonicDEATH.playAnim('firstDEATH');
-			add(sonicDEATH);
-		}
-
-		if (PlayState.SONG.song.toLowerCase() == 'endless')
-		{
-			countdown = new FlxText(614, 118 - 30, 100, '10', 40);
-			countdown.setFormat('Sonic CD Menu Font Regular', 40, FlxColor.WHITE);
-			countdown.setBorderStyle(SHADOW, FlxColor.BLACK, 4, 1);
-			add(countdown);
-			countdown.alpha = 0;
-			countdown.visible = true;
-			countdown.cameras = [coolcamera];
-		}
+	if (PlayState.SONG.song.toLowerCase() == 'endless')
+	{
+		countdown = new FlxText(614, 118 - 30, 100, '10', 40);
+		countdown.setFormat('Sonic CD Menu Font Regular', 40, FlxColor.WHITE);
+		countdown.setBorderStyle(SHADOW, FlxColor.BLACK, 4, 1);
+		add(countdown);
+		countdown.alpha = 0;
+		countdown.visible = true;
+		countdown.cameras = [coolcamera];
+	}
 
 		if (PlayState.SONG.song.toLowerCase() == 'chaos')
-		{
-			bf.alpha = 0;
-			bfdeathshit = new FlxSprite(x - 400, y - 200);
-			bfdeathshit.frames = Paths.getSparrowAtlas('fleetway_death_BF');
-			bfdeathshit.animation.addByPrefix('bru', 'fleetway death BF dies', 14, false);
-			FlxG.sound.play(Paths.sound('laser_moment', 'exe'), .5);
-			bfdeathshit.animation.addByPrefix('h', 'fleetway death BF Dead Loop', 4, true);
-			add(bfdeathshit);
-		}
-
-		if (PlayState.SONG.song == 'endless')
-		{
-			bottomMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('bottomMajins'));
-			bottomMajins.scale.x = 1.1;
-			bottomMajins.scale.y = 1.1;
-
-			bottomMajins.alpha = 0;
-			add(bottomMajins);
-		}
+			{
+				bf.alpha = 0;
+				bfdeathshit = new FlxSprite(x - 400, y - 200);
+				bfdeathshit.frames = Paths.getSparrowAtlas('fleetway_death_BF');
+				bfdeathshit.animation.addByPrefix('bru', 'fleetway death BF dies', 14, false);
+				FlxG.sound.play(Paths.sound('laser_moment', 'exe'), .5);
+				bfdeathshit.animation.addByPrefix('h', 'fleetway death BF Dead Loop', 4, true);
+				add(bfdeathshit);
+			}
+	
+			if (PlayState.SONG.song == 'endless')
+			{
+				bottomMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('bottomMajins'));
+				bottomMajins.scale.x = 1.1;
+				bottomMajins.scale.y = 1.1;
+	
+				bottomMajins.alpha = 0;
+				add(bottomMajins);
+			}
 
 		add(bf);
 		if (PlayState.SONG.song.toLowerCase() == 'milk')
 		{
 			bf.alpha = 0;
-			add(bfdeathshit);
-		}
-		else if (PlayState.SONG.song.toLowerCase() == 'sunshine')
-		{
-			bf.alpha = 0;
-			bfdeathshit.frames = Paths.getSparrowAtlas('3DGOpng');
-			bfdeathshit.setGraphicSize(720, 720);
-			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
-			bfdeathshit.cameras = [coolcamera];
-			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('firstdeath');
 			add(bfdeathshit);
 		}
 		else if (PlayState.SONG.song.toLowerCase() == 'too-fest')
@@ -162,9 +149,10 @@ class GameOverSubstate extends MusicBeatSubstate
 			{
 				LoadingState.loadAndSwitchState(new VideoState('assets/videos/BfFuckingDies', new SoundTestMenu()));			});
 		}
-		else if (PlayState.SONG.song.toLowerCase() == 'black-sun')
+		else if (PlayState.SONG.song.toLowerCase() == 'black-sun' || PlayState.SONG.song.toLowerCase() == 'sunshine' || PauseSubState.cantescapecounter > 9)
 		{
 			bf.alpha = 0;
+			PauseSubState.cantescapecounter = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('exedeath');
 			bfdeathshit.setGraphicSize(Std.int(bfdeathshit.width * 1.9));
 			bfdeathshit.setPosition(-673, -378);
@@ -179,20 +167,20 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 
 		if (PlayState.SONG.song == 'endless')
-		{
-			topMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('topMajins'));
-			topMajins.scale.x = 1.1;
-			topMajins.scale.y = 1.1;
-			topMajins.alpha = 0;
-			add(topMajins);
-		}
+			{
+				topMajins = new FlxSprite(bf.x - 50 - 200 - 200, bf.y - 300).loadGraphic(Paths.image('topMajins'));
+				topMajins.scale.x = 1.1;
+				topMajins.scale.y = 1.1;
+				topMajins.alpha = 0;
+				add(topMajins);
+			}
 
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
 		switch (PlayState.SONG.song)
 		{
-			case 'too-fest', 'black-sun':
+			case 'too-fest', 'black-sun', 'sunshine':
 
 			case 'chaos':
 				bfdeathshit.animation.play('bru');
@@ -207,10 +195,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.target = null;
 
 		bf.playAnim('firstDeath');
-		
+
 		#if mobileC
-        addVirtualPad(NONE, A_B);
-        #end
+		addVirtualPad(NONE, A_B);
+		#end
 	}
 
 	function startCountdown():Void
@@ -221,12 +209,12 @@ class GameOverSubstate extends MusicBeatSubstate
 			switch (PlayState.SONG.song)
 			{
 				case 'endless':
-					add(bluevg);
-					FlxTween.tween(countdown, {alpha: 1}, 1);
-					FlxTween.tween(topMajins, {alpha: 1}, 5);
-					FlxTween.tween(bottomMajins, {alpha: 1}, 10);
-					FlxG.sound.play(Paths.sound('buildUP'), 1);
-			}
+			add(bluevg);
+			FlxTween.tween(countdown, {alpha: 1}, 1);
+			FlxTween.tween(topMajins, {alpha: 1}, 5);
+			FlxTween.tween(bottomMajins, {alpha: 1}, 10);
+			FlxG.sound.play(Paths.sound('buildUP'), 1);
+		}
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				timer--;
@@ -252,7 +240,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	function youFuckedUp():Void
 	{
 		toolateurfucked = true;
-
+		
+		if(PlayState.SONG.song.toLowerCase() != 'you-cant-run' || PauseSubState.cantescapecounter > 9){ //just to be sure that this stuff actually works
 		switch (PlayState.SONG.song)
 		{
 			case 'endless':
@@ -260,62 +249,86 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxTween.tween(countdown, {alpha: 0}, 0.5);
 				remove(topMajins);
 				remove(bottomMajins);
+				_virtualpad.visible = false; //porque é cool yeah
 				bf.visible = false;
 				majinBf.visible = true;
 				majinBf.playAnim('premajin');
 				FlxG.sound.play(Paths.sound('firstLOOK'), 1);
 
-				FlxTween.tween(bluevg, {alpha: 1}, 0.2, {
-					onComplete: function(twn:FlxTween)
-					{
-						FlxTween.tween(bluevg, {alpha: 0}, 0.9);
-					}
-				});
-				FlxTween.tween(FlxG.camera, {zoom: 1.7}, 1.5, {ease: FlxEase.quartOut});
-				new FlxTimer().start(2.6, function(tmr:FlxTimer)
+		FlxTween.tween(bluevg, {alpha: 1}, 0.2, {
+			onComplete: function(twn:FlxTween)
+			{
+				FlxTween.tween(bluevg, {alpha: 0}, 0.9);
+			}
+		});	
+		FlxTween.tween(FlxG.camera, {zoom: 1.7}, 1.5, {ease: FlxEase.quartOut});
+		new FlxTimer().start(2.6, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(FlxG.camera, {zoom: 1}, 0.3, {ease: FlxEase.quartOut});
+			majinBf.x -= 150;
+			majinBf.y -= 150;
+			majinBf.playAnim('majin');
+			FlxG.camera.shake(0.01, 0.2);
+			FlxG.camera.flash(FlxColor.fromRGB(75, 60, 240), .5);
+			FlxG.sound.play(Paths.sound('secondLOOK'), 1);
+
+			new FlxTimer().start(.4, function(tmr:FlxTimer)
 				{
-					FlxTween.tween(FlxG.camera, {zoom: 1}, 0.3, {ease: FlxEase.quartOut});
-					majinBf.x -= 150;
-					majinBf.y -= 150;
-					majinBf.playAnim('majin');
-					FlxG.camera.shake(0.01, 0.2);
-					FlxG.camera.flash(FlxColor.fromRGB(75, 60, 240), .5);
-					FlxG.sound.play(Paths.sound('secondLOOK'), 1);
-
-					new FlxTimer().start(.4, function(tmr:FlxTimer)
-					{
-						FlxTween.tween(FlxG.camera, {zoom: 1.5}, 6, {ease: FlxEase.circIn});
-					});
-
-					new FlxTimer().start(5.5, function(tmr:FlxTimer)
-					{
-						System.exit(0);
-					});
+					FlxTween.tween(FlxG.camera, {zoom: 1.5}, 6, {ease: FlxEase.circIn});
 				});
-			case 'black-sun':
-				FlxG.sound.play(Paths.sound('Exe_die'));
-				var statica:FlxSprite = new FlxSprite();
-				statica.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
-				statica.animation.addByPrefix('fard', 'screenSTATIC', 24, true);
-				statica.alpha = 0;
-				statica.animation.play('fard');
-				statica.cameras = [coolcamera2];
-				add(statica);
 
-				remove(bluevg);
-				bluevg.loadGraphic(Paths.image('RedVG', 'exe'));
-				add(bluevg);
-				bfdeathshit.animation.play('die');
-				bfdeathshit.animation.paused = false;
-				FlxTween.tween(bluevg, {alpha: 1}, 0.5);
-				FlxTween.tween(statica, {alpha: 0.2}, 0.2);
-				coolcamera.shake(0.05, 1);
-
-				bfdeathshit.animation.finishCallback = function(amogus:String)
+			new FlxTimer().start(5.5, function(tmr:FlxTimer)
 				{
 					System.exit(0);
-				}
-		}
+				});
+				});
+				case 'black-sun', 'sunshine':
+					FlxG.sound.play(Paths.sound('Exe_die'));
+					var statica:FlxSprite = new FlxSprite();
+					statica.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
+					statica.animation.addByPrefix('fard', 'screenSTATIC', 24, true);
+					statica.alpha = 0;
+					statica.animation.play('fard');
+					statica.cameras = [coolcamera2];
+					add(statica);
+					_virtualpad.visible = false;
+					remove(bluevg);
+					bluevg.loadGraphic(Paths.image('RedVG', 'exe'));
+					add(bluevg);
+					bfdeathshit.animation.play('die');
+					bfdeathshit.animation.paused = false;
+					FlxTween.tween(bluevg, {alpha: 1}, 0.5);
+					FlxTween.tween(statica, {alpha: 0.2}, 0.2);
+					coolcamera.shake(0.05, 1);
+	
+					bfdeathshit.animation.finishCallback = function(amogus:String)
+					{
+						System.exit(0);
+					}
+				case 'you-cant-run':
+					FlxG.sound.play(Paths.sound('Exe_die'));
+					var statica:FlxSprite = new FlxSprite();
+					statica.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
+					statica.animation.addByPrefix('fard', 'screenSTATIC', 24, true);
+					statica.alpha = 0;
+					statica.animation.play('fard');
+					statica.cameras = [coolcamera2];
+					add(statica);
+					_virtualpad.visible = false;	
+					remove(bluevg);
+					bluevg.loadGraphic(Paths.image('RedVG', 'exe'));
+					add(bluevg);
+					bfdeathshit.animation.play('die');
+					bfdeathshit.animation.paused = false;
+					FlxTween.tween(bluevg, {alpha: 1}, 0.5);
+					FlxTween.tween(statica, {alpha: 0.2}, 0.2);
+					coolcamera.shake(0.05, 1);
+
+					bfdeathshit.animation.finishCallback = function(amogus:String)
+					{
+						System.exit(0);
+					}
+		}}
 	}
 
 	override function update(elapsed:Float)
@@ -324,7 +337,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.ACCEPT)
 		{
-			if (!toolateurfucked)
+			if (!toolateurfucked) 
 			{
 				actuallynotfuckd = true;
 				endBullshit();
@@ -342,7 +355,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				if (PlayState.isStoryMode)
 					FlxG.switchState(new StoryMenuState());
 				else
-					FlxG.switchState(new SoundTestMenu());
+					FlxG.switchState(new MainMenuState());
 				PlayState.loadRep = false;
 			}
 		}
@@ -385,20 +398,20 @@ class GameOverSubstate extends MusicBeatSubstate
 	}
 
 	function playVoiceLine(path:String,
-			num:Int = 0) // FOR FUCKS SAKE OKAY LISTEN UP SO WHAT I TRIED IS TO SIMPLY MAKE IT LOOK TROUGH ALL THE FILES IN THE FOLDER BUT FOR SOME REASON IT WOULDN'T STOP BREAKING SO I HAD TO MAKE A FUCKING PARAMETER BASED ON THE NUMBER OF VOICLINES SO NOTHING FUCKS UP.
+		num:Int = 0) // FOR FUCKS SAKE OKAY LISTEN UP SO WHAT I TRIED IS TO SIMPLY MAKE IT LOOK TROUGH ALL THE FILES IN THE FOLDER BUT FOR SOME REASON IT WOULDN'T STOP BREAKING SO I HAD TO MAKE A FUCKING PARAMETER BASED ON THE NUMBER OF VOICLINES SO NOTHING FUCKS UP.
+{
+	FlxTween.tween(FlxG.sound.music, {volume: 0.4}, 0.3);
+
+	var rng = Std.string(FlxG.random.int(1, num));
+
+	voiceline.loadEmbedded(path + '/' + rng + '.ogg');
+	voiceline.play();
+	voiceline.onComplete = function()
 	{
-		FlxTween.tween(FlxG.sound.music, {volume: 0.4}, 0.3);
-
-		var rng = Std.string(FlxG.random.int(1, num));
-
-		voiceline.loadEmbedded(path + '/' + rng + '.ogg');
-		voiceline.play();
-		voiceline.onComplete = function()
-		{
-			FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.3);
-		}
-		FlxG.sound.list.add(voiceline);
+		FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.3);
 	}
+	FlxG.sound.list.add(voiceline);
+}
 
 	override function beatHit()
 	{
@@ -417,17 +430,17 @@ class GameOverSubstate extends MusicBeatSubstate
 			voiceline.volume = 0;
 			bf.playAnim('deathConfirm', true);
 			if (PlayState.SONG.song == 'too-slow' || PlayState.SONG.song == 'you-cant-run')
-				sonicDEATH.playAnim('retry', true);
+			sonicDEATH.playAnim('retry', true);
 			new FlxTimer().start(0.1, function(tmr:FlxTimer)
-			{
-				bf.visible = false;
-				remove(countdown);
-				remove(topMajins);
-				remove(bottomMajins);
-				remove(bfdeathshit);
-				islol = false;
-				FlxG.camera.flash(FlxColor.RED, 4);
-			});
+				{
+					bf.visible = false;
+					remove(countdown);
+					remove(topMajins);
+					remove(bottomMajins);
+					remove(bfdeathshit);
+					islol = false;
+					FlxG.camera.flash(FlxColor.RED, 4);					
+				});
 			FlxG.sound.music.stop();
 			switch (PlayState.SONG.song.toLowerCase())
 			{

@@ -1,18 +1,12 @@
 package;
 
-import flixel.FlxState;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
+import flixel.util.FlxTimer;
 
 
 #if windows
@@ -137,8 +131,8 @@ class SoundTestMenu extends MusicBeatState
 		if (funnymonke)
 		{
 			pcmValue += selection;
-			if (pcmValue < 0) pcmValue = 69;
-			if (pcmValue > 69) pcmValue = 0;
+			if (pcmValue < 0) pcmValue = 70;
+			if (pcmValue > 70) pcmValue = 0;
 		}
 		else
 		{
@@ -181,6 +175,25 @@ class SoundTestMenu extends MusicBeatState
 			});
 			if (!FlxG.save.data.songArray.contains('endless') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('endless');
 		}
+		if (first == 25 && second == 12)
+			{
+				woahmanstopspammin = false;
+				PlayState.isold = true;
+				PlayStateChangeables.nocheese = false;
+				PlayState.SONG = Song.loadFromJson('endless', 'endless');
+				PlayState.isFreeplay = false;
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = 2;
+				PlayState.storyWeek = 1;
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+				flashyWashy(true);
+				new FlxTimer().start(2, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new PlayState());
+				});
+				if (!FlxG.save.data.songArray.contains('endless') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('endless');
+			}
 		else if (first == 7 && second == 7)
 			{
 				woahmanstopspammin = false;
@@ -199,6 +212,22 @@ class SoundTestMenu extends MusicBeatState
 				});
 				if (!FlxG.save.data.songArray.contains('cycles') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('cycles');
 			}
+			else if (first == 70 && second == 7) //I mean this is only available here soo yeah, don't expect to unlock something
+				{
+					woahmanstopspammin = false;
+					PlayStateChangeables.nocheese = false;
+					PlayState.SONG = Song.loadFromJson('execution-hard', 'execution');
+					PlayState.isStoryMode = false;
+					PlayState.storyDifficulty = 2;
+					PlayState.storyWeek = 1;
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
+					flashyWashy(true);
+					new FlxTimer().start(2, function(tmr:FlxTimer)
+					{
+						LoadingState.loadAndSwitchState(new PlayState());
+					});
+				}
 		else if (first == 31 && second == 13)
 			{
 				woahmanstopspammin = false;
@@ -406,7 +435,7 @@ class SoundTestMenu extends MusicBeatState
 
 			if (controls.ACCEPT && !woahmanstopspammin && incameo) LoadingState.loadAndSwitchState(new SoundTestMenu());
 
-			if (controls.BACK && woahmanstopspammin && !incameo) LoadingState.loadAndSwitchState(new MainMenuState());
+			if (controls.BACK && woahmanstopspammin && !incameo) MusicBeatState.switchState(new MainMenuState());
 
 			if (funnymonke)
 			{

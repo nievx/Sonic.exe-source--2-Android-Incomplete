@@ -1,22 +1,22 @@
 package;
 
-import flixel.ui.FlxButton;
-import flixel.addons.ui.FlxUIButton;
-import flixel.text.FlxText;
+import Config;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.util.FlxColor;
-import ui.FlxVirtualPad;
-import flixel.util.FlxSave;
+import flixel.addons.ui.FlxUIButton;
 import flixel.math.FlxPoint;
+import flixel.text.FlxText;
+import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import haxe.Json;
+import ui.FlxVirtualPad;
 import ui.Hitbox;
-import Config;
+
+using StringTools;
 #if lime
 import lime.system.Clipboard;
 #end
 
-using StringTools;
 
 class CustomControlsState extends MusicBeatSubstate
 {
@@ -32,14 +32,14 @@ class CustomControlsState extends MusicBeatSubstate
 	var down_text:FlxText;
 	var left_text:FlxText;
 	var right_text:FlxText;
-	var thefunni_text:FlxText;
+	var bg:FlxSprite;
 
 	var inputvari:FlxText;
 
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 							//'hitbox',
-	var controlitems:Array<String> = ['right control', 'left control','keyboard','custom', 'hitbox'];
+	var controlitems:Array<String> = ['Controle Destro', 'Controle Canhoto','Teclado','Customizado', 'Hitbox'];
 
 	var curSelected:Int = 0;
 
@@ -55,29 +55,27 @@ class CustomControlsState extends MusicBeatSubstate
 
 		//init config
 		config = new Config();
-		
+
 		// bg
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menuBG.png');
-		bg.scrollFactor.x = 0;
-		bg.scrollFactor.y = 0.18;
-		bg.setGraphicSize(Std.int(bg.width * 1.1));
-		bg.updateHitbox();
+		bg = new FlxSprite().loadGraphic(Paths.image('BackGROUND'));
 		bg.screenCenter();
-		bg.antialiasing = true;
+		bg.setGraphicSize(1280, 720);
+		bg.color = 0xFFfd719b;
+		add(bg);
 
 		// load curSelected
 		curSelected = config.getcontrolmode();
-		
+
 
 		//pad
 		_pad = new FlxVirtualPad(RIGHT_FULL, NONE);
 		_pad.alpha = 0;
-		
+
 
 
 		//text inputvari
 		inputvari = new FlxText(125, 50, 0,controlitems[0], 48);
-		
+
 		//arrows
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 
@@ -99,7 +97,7 @@ class CustomControlsState extends MusicBeatSubstate
 		down_text = new FlxText(200, 250, 0,"Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y, 24);
 		left_text = new FlxText(200, 300, 0,"Button left x:" + _pad.buttonLeft.x +" y:" + _pad.buttonLeft.y, 24);
 		right_text = new FlxText(200, 350, 0,"Button right x:" + _pad.buttonRight.x +" y:" + _pad.buttonRight.y, 24);
-		
+
 		//hitboxes
 
 		_hb = new Hitbox();
@@ -107,22 +105,22 @@ class CustomControlsState extends MusicBeatSubstate
 
 		// buttons
 
-		exitbutton = new FlxUIButton(FlxG.width - 650,25,"exit");
+		exitbutton = new FlxUIButton(FlxG.width - 650,25,"Sair");
 		exitbutton.resize(125,50);
 		exitbutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
 
-		var savebutton = new FlxUIButton((exitbutton.x + exitbutton.width + 25),25,"exit and save",() -> {
+		var savebutton = new FlxUIButton((exitbutton.x + exitbutton.width + 25),25,"Sair e Salvar",() -> {
 			save();
 			FlxG.switchState(new OptionsMenu());
 		});
 		savebutton.resize(250,50);
 		savebutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
 
-		exportbutton = new FlxUIButton(FlxG.width - 150, 25, "export", () -> { savetoclipboard(_pad); } );
+		exportbutton = new FlxUIButton(FlxG.width - 150, 25, "Exportar", () -> { savetoclipboard(_pad); } );
 		exportbutton.resize(125,50);
 		exportbutton.setLabelFormat("VCR OSD Mono", 24, FlxColor.BLACK,"center");
 
-		importbutton = new FlxUIButton(exportbutton.x, 100, "import", () -> { loadfromclipboard(_pad); });
+		importbutton = new FlxUIButton(exportbutton.x, 100, "Importar", () -> { loadfromclipboard(_pad); });
 		importbutton.resize(125,50);
 		importbutton.setLabelFormat("VCR OSD Mono", 24, FlxColor.BLACK,"center");
 
@@ -152,7 +150,6 @@ class CustomControlsState extends MusicBeatSubstate
 		add(down_text);
 		add(left_text);
 		add(right_text);
-		add(thefunni_text);
 
 		// change selection
 		changeSelection();
@@ -170,11 +167,11 @@ class CustomControlsState extends MusicBeatSubstate
 		if (exitbutton.justReleased || androidback){
 			FlxG.switchState(new OptionsMenu());
 		}
-		
+
 		for (touch in FlxG.touches.list){
 			//left arrow animation
 			arrowanimate(touch);
-			
+
 			//change Selection
 			if(touch.overlaps(leftArrow) && touch.justPressed){
 				changeSelection(-1);
@@ -182,7 +179,7 @@ class CustomControlsState extends MusicBeatSubstate
 				changeSelection(1);
 			}
 
-			//custom pad 
+			//custom pad
 			trackbutton(touch);
 		}
 	}
@@ -190,18 +187,18 @@ class CustomControlsState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0,?forceChange:Int)
 		{
 			curSelected += change;
-	
+
 			if (curSelected < 0)
 				curSelected = controlitems.length - 1;
 			if (curSelected >= controlitems.length)
 				curSelected = 0;
 			trace(curSelected);
-	
+
 			if (forceChange != null)
 			{
 				curSelected = forceChange;
 			}
-	
+
 			inputvari.text = controlitems[curSelected];
 
 			if (forceChange != null)
@@ -209,23 +206,23 @@ class CustomControlsState extends MusicBeatSubstate
 					if (curSelected == 2){
 						_pad.visible = true;
 					}
-					
+
 					return;
 				}
-			
+
 			_hb.visible = false;
-	
+
 			switch curSelected{
 				case 0:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(RIGHT_FULL, A);
+					_pad = new FlxVirtualPad(RIGHT_FULL, NONE);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 1:
 					this.remove(_pad);
 					_pad = null;
-					_pad = new FlxVirtualPad(FULL, A);
+					_pad = new FlxVirtualPad(FULL, NONE);
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 2:
@@ -242,14 +239,14 @@ class CustomControlsState extends MusicBeatSubstate
 					_hb.visible = true;
 
 			}
-	
+
 		}
 
 	function arrowanimate(touch:flixel.input.touch.FlxTouch){
 		if(touch.overlaps(leftArrow) && touch.pressed){
 			leftArrow.animation.play('press');
 		}
-		
+
 		if(touch.overlaps(leftArrow) && touch.released){
 			leftArrow.animation.play('idle');
 		}
@@ -257,7 +254,7 @@ class CustomControlsState extends MusicBeatSubstate
 		if(touch.overlaps(rightArrow) && touch.pressed){
 			rightArrow.animation.play('press');
 		}
-		
+
 		if(touch.overlaps(rightArrow) && touch.released){
 			rightArrow.animation.play('idle');
 		}
@@ -267,12 +264,12 @@ class CustomControlsState extends MusicBeatSubstate
 		//custom pad
 
 		if (buttonistouched){
-			
+
 			if (bindbutton.justReleased && touch.justReleased)
 			{
 				bindbutton = null;
 				buttonistouched = false;
-			}else 
+			}else
 			{
 				movebutton(touch, bindbutton);
 				setbuttontexts();
@@ -285,7 +282,7 @@ class CustomControlsState extends MusicBeatSubstate
 
 				movebutton(touch, _pad.buttonUp);
 			}
-			
+
 			if (_pad.buttonDown.justPressed) {
 				if (curSelected != 3)
 					changeSelection(0,3);
@@ -305,13 +302,6 @@ class CustomControlsState extends MusicBeatSubstate
 					changeSelection(0,3);
 
 				movebutton(touch, _pad.buttonLeft);
-			}
-
-			if (_pad.buttonA.justPressed) {
-				if (curSelected != 3)
-					changeSelection(0,3);
-
-				movebutton(touch, _pad.buttonA);
 			}
 		}
 	}
@@ -335,7 +325,7 @@ class CustomControlsState extends MusicBeatSubstate
 	function save() {
 
 		config.setcontrolmode(curSelected);
-		
+
 		if (curSelected == 3){
 			savecustom();
 		}
@@ -351,8 +341,8 @@ class CustomControlsState extends MusicBeatSubstate
 
 	function loadcustom():Void{
 		//load pad
-		_pad = config.loadcustom(_pad);	
-	
+		_pad = config.loadcustom(_pad);
+
 	}
 
 	function resizebuttons(vpad:FlxVirtualPad, ?int:Int = 200) {
@@ -365,14 +355,14 @@ class CustomControlsState extends MusicBeatSubstate
 
 	function savetoclipboard(pad:FlxVirtualPad) {
 		trace("saved");
-		
+
 		var json = {
 			buttonsarray : []
 		};
 
 		var tempCount:Int = 0;
 		var buttonsarray = new Array();
-		
+
 		for (buttons in pad)
 		{
 			buttonsarray[tempCount] = FlxPoint.get(buttons.x, buttons.y);
@@ -408,7 +398,7 @@ class CustomControlsState extends MusicBeatSubstate
 			buttons.x = json.buttonsarray[tempCount].x;
 			buttons.y = json.buttonsarray[tempCount].y;
 			tempCount++;
-		}	
+		}
 		setbuttontexts();
 	}
 

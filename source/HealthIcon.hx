@@ -32,6 +32,7 @@ class HealthIcon extends FlxSprite
 		animation.add('sonicfun', [26, 27], 0, false, isPlayer);
 		animation.add('duo', [26, 26], 0, false, isPlayer);
 		animation.add('sonicLordX', [28, 29], 0, false, isPlayer);
+		animation.add('sonicLordXold', [28, 29], 0, false, isPlayer);
 		animation.add('faker', [34, 35], 0, false, isPlayer);
 		animation.add('exe', [36, 37], 0, false, isPlayer);
 		animation.add('sanic', [38, 39], 0, false, isPlayer);

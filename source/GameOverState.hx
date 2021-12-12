@@ -4,7 +4,6 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -51,23 +50,13 @@ class GameOverState extends FlxTransitionableState
 		if (PlayState.SONG.song.toLowerCase() == 'milk') bf.alpha = 0;
 
 		var bfdeathshit:FlxSprite = new FlxSprite();
-
-		if (PlayState.SONG.song.toLowerCase() == 'sunshine')
-		{
-			bf.alpha = 0;
-			bfdeathshit.frames = Paths.getSparrowAtlas('3DGO', 'exe');
-			bfdeathshit.animation.addByPrefix('firstdeath', 'DeathAnim', 24, false);
-			bfdeathshit.cameras = [coolcam];
-			bfdeathshit.screenCenter();
-			bfdeathshit.animation.play('firstdeath');
-		}
 		add(bfdeathshit);
 
 		
 
 		FlxG.camera.follow(bf, LOCKON, 0.001);
 		
-			var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(Paths.image('restart'));
+		var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(Paths.image('restart'));
 			restart.setGraphicSize(Std.int(restart.width * 0.6));
 			restart.updateHitbox();
 			restart.alpha = 0;
@@ -76,8 +65,8 @@ class GameOverState extends FlxTransitionableState
 
 		FlxG.sound.music.fadeOut(2, FlxG.sound.music.volume * 0.6);
 
-		FlxTween.tween(restart, {alpha: 1}, 1, {ease: FlxEase.quartInOut});
-		FlxTween.tween(restart, {y: restart.y + 40}, 7, {ease: FlxEase.quartInOut, type: PINGPONG});
+	FlxTween.tween(restart, {alpha: 1}, 1, {ease: FlxEase.quartInOut});
+	FlxTween.tween(restart, {y: restart.y + 40}, 7, {ease: FlxEase.quartInOut, type: PINGPONG});
 
 		super.create();
 	}

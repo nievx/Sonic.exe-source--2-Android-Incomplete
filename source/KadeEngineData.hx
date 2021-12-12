@@ -86,7 +86,7 @@ class KadeEngineData
 			FlxG.save.data.accuracyMod = 1;
 
 		if (FlxG.save.data.watermark == null)
-			FlxG.save.data.watermark = true;
+			FlxG.save.data.watermark = false;
 
 		if (FlxG.save.data.ghost == null)
 			FlxG.save.data.ghost = true;

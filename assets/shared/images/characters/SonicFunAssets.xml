@@ -33,6 +33,11 @@
 	<SubTexture name="SONICFUNIDLE instance 10008" x="0" y="1365" width="516" height="678"/>
 	<SubTexture name="SONICFUNIDLE instance 10009" x="0" y="1365" width="516" height="678"/>
 	<SubTexture name="SONICFUNIDLE instance 10010" x="0" y="1365" width="516" height="678"/>
+	<SubTexture name="SONICFUNIDLE instance 10011" x="2604" y="654" width="516" height="678"/>
+	<SubTexture name="SONICFUNIDLE instance 10012" x="2088" y="654" width="516" height="678"/>
+	<SubTexture name="SONICFUNIDLE instance 10013" x="1572" y="654" width="516" height="678"/>
+	<SubTexture name="SONICFUNIDLE instance 10014" x="1047" y="654" width="516" height="678"/>
+	<SubTexture name="SONICFUNIDLE instance 10015" x="516" y="654" width="516" height="678"/>
 	<SubTexture name="SONICFUNLEFT instance 10000" x="572" y="1400" width="741" height="553"/>
 	<SubTexture name="SONICFUNLEFT instance 10001" x="1314" y="1400" width="741" height="553"/>
 	<SubTexture name="SONICFUNLEFT instance 10002" x="2054" y="1400" width="741" height="553"/>

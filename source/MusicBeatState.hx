@@ -1,20 +1,15 @@
 package;
 
-#if windows
-import Discord.DiscordClient;
-#end
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
-import openfl.Lib;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
+import flixel.FlxState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
-import flixel.math.FlxRect;
-import flixel.util.FlxTimer;
+import flixel.util.FlxColor;
+import openfl.Lib;
 #if mobileC
-import ui.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
+import ui.FlxVirtualPad;
 #end
 
 class MusicBeatState extends FlxUIState
@@ -30,43 +25,45 @@ class MusicBeatState extends FlxUIState
 		return PlayerSettings.player1.controls;
 
 	#if mobileC
-	var _virtualpad:FlxVirtualPad;
+		var _virtualpad:FlxVirtualPad;
 
-	var trackedinputs:Array<FlxActionInput> = [];
+		var trackedinputs:Array<FlxActionInput> = [];
 
-	// adding virtualpad to state
-	public function addVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode) {
-		_virtualpad = new FlxVirtualPad(DPad, Action);
-		_virtualpad.alpha = 0.75;
-		add(_virtualpad);
-		controls.setVirtualPad(_virtualpad, DPad, Action);
-		trackedinputs = controls.trackedinputs;
-		controls.trackedinputs = [];
+		// adding virtualpad to state
+		public function addVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode) {
+			_virtualpad = new FlxVirtualPad(DPad, Action);
+			_virtualpad.alpha = 0.75;
+			add(_virtualpad);
+			controls.setVirtualPad(_virtualpad, DPad, Action);
+			trackedinputs = controls.trackedinputs;
+			controls.trackedinputs = [];
 
-		#if android
-		controls.addAndroidBack();
+			#if android
+			controls.addAndroidBack();
+			#end
+		}
+		
+		override function destroy() {
+			controls.removeFlxInput(trackedinputs);
+
+			super.destroy();
+		}
+		#else
+		public function addVirtualPad(?DPad, ?Action){};
 		#end
-	}
 
-	override function destroy() {
-		controls.removeFlxInput(trackedinputs);
-
-		super.destroy();
-	}
-	#else
-	public function addVirtualPad(?DPad, ?Action){};
-	#end
-
-	override function create()
-	{
+	override function create() {
+		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		(cast (Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);
-
-		if (transIn != null)
-			trace('reg ' + transIn.region);
-
 		super.create();
-	}
 
+		// Custom made Trans out
+		if(!skip) {
+			openSubState(new CustomFadeTransition(1, true));
+		}
+		FlxTransitionableState.skipNextTransOut = false;
+	}
+	
 
 	var array:Array<FlxColor> = [
 		FlxColor.fromRGB(148, 0, 211),
@@ -132,6 +129,39 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor((Conductor.songPosition - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
+	public static function switchState(nextState:FlxState) {
+		// Custom made Trans in
+		var curState:Dynamic = FlxG.state;
+		var leState:MusicBeatState = curState;
+		if(!FlxTransitionableState.skipNextTransIn) {
+			leState.openSubState(new CustomFadeTransition(0.7, false));
+			if(nextState == FlxG.state) {
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.resetState();
+				};
+				//trace('resetted');
+			} else {
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.switchState(nextState);
+				};
+				//trace('changed state');
+			}
+			return;
+		}
+		FlxTransitionableState.skipNextTransIn = false;
+		FlxG.switchState(nextState);
+	}
+
+	public static function resetState() {
+		MusicBeatState.switchState(FlxG.state);
+	}
+
+	public static function getState():MusicBeatState {
+		var curState:Dynamic = FlxG.state;
+		var leState:MusicBeatState = curState;
+		return leState;
+	}
+
 	public function stepHit():Void
 	{
 
@@ -143,13 +173,13 @@ class MusicBeatState extends FlxUIState
 	{
 		//do literally nothing dumbass
 	}
-	
+
 	public function fancyOpenURL(schmancy:String)
-	{
-		#if linux
-		Sys.command('/usr/bin/xdg-open', [schmancy, "&"]);
-		#else
-		FlxG.openURL(schmancy);
-		#end
-	}
+		{
+			#if linux
+			Sys.command('/usr/bin/xdg-open', [schmancy, "&"]);
+			#else
+			FlxG.openURL(schmancy);
+			#end
+		}
 }

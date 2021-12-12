@@ -1,30 +1,27 @@
 // this file is for modchart things, this is to declutter playstate.hx
 
 // Lua
-import openfl.display3D.textures.VideoTexture;
-import flixel.graphics.FlxGraphic;
-import flixel.graphics.frames.FlxAtlasFrames;
  #if windows
-import flixel.tweens.FlxEase;
-import openfl.filters.ShaderFilter;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
-import openfl.geom.Matrix;
-import openfl.display.BitmapData;
-import lime.app.Application;
-import flixel.FlxSprite;
-import llua.Convert;
-import llua.Lua;
-import llua.State;
-import llua.LuaL;
+import Sys;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
-//sprites code
+import flixel.FlxSprite;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import lime.app.Application;
+import llua.Convert;
+import llua.Lua;
+import llua.LuaL;
+import llua.State;
 import openfl.Assets;
-import sys.io.File;
-import Sys;
+import openfl.display.BitmapData;
+import openfl.filters.ShaderFilter;
+import openfl.geom.Matrix;
 import sys.FileSystem;
+import sys.io.File;
+//sprites code
 //sprites code
 
 class ModchartState 

@@ -1,15 +1,14 @@
 package ui;
 
+import flash.display.BitmapData;
 import flixel.FlxG;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxAssets;
-import flixel.util.FlxDestroyUtil;
 import flixel.ui.FlxButton;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flash.display.BitmapData;
-import flixel.graphics.FlxGraphic;
+import flixel.util.FlxDestroyUtil;
 import openfl.utils.ByteArray;
 
 /**
@@ -97,6 +96,8 @@ class FlxVirtualPad extends FlxSpriteGroup
 		{
 			case A:
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
+			case X:
+				actions.add(add(buttonX = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "x")));
 			case A_B:
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));
@@ -199,6 +200,7 @@ enum FlxActionMode
 {
 	NONE;
 	A;
+	X;
 	A_B;
 	A_B_C;
 	A_B_X_Y;

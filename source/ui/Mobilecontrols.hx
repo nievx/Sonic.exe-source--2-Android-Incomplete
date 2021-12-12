@@ -1,12 +1,9 @@
 package ui;
 
-import flixel.FlxG;
+import Config;
 import flixel.group.FlxSpriteGroup;
-
 import ui.FlxVirtualPad;
 import ui.Hitbox;
-
-import Config;
 
 class Mobilecontrols extends FlxSpriteGroup
 {

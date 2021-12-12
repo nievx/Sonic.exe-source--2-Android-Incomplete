@@ -21,7 +21,7 @@ class VideoState extends MusicBeatState
 	{
 		super();
 
-		text = new FlxText(0, 0, 0, "toque para continuar", 48);
+		text = new FlxText(0, 0, 0, "tap to continue", 48);
 		text.screenCenter();
 		text.alpha = 0;
 		add(text);
@@ -54,7 +54,7 @@ class VideoState extends MusicBeatState
 
 	function onURLChanging(url:String) {
 		text.alpha = 1;
-		if (url == 'http://exitme(.*)') onClose(); // drity hack lol
+		if (url == 'http://exitme/') onClose(); // drity hack lol
 		trace("WebView is about to open: "+url);
 	}
 }

@@ -1,13 +1,12 @@
 package ui;
 
 import flixel.FlxG;
-import flixel.graphics.FlxGraphic;
 import flixel.FlxSprite;
+import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
-import flixel.ui.FlxButton;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.ui.FlxButton;
 
 class Hitbox extends FlxSpriteGroup
 {
