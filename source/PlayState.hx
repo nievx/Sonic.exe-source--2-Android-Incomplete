@@ -295,7 +295,7 @@ class PlayState extends MusicBeatState
 	var inCutscene:Bool = false;
 
 	//Mecanica diferenciada, Obviamente isso não veio da BS
-	var secreto:FlxUIButton;
+	public static var secreto:FlxUIButton;
 
 
 	public static var repPresses:Int = 0;
@@ -342,20 +342,11 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
-
-		secreto = new FlxUIButton(0, 650, "", function() {
-			gambiarraspace = true;
-			secreto.visible = false;
-		});
-        secreto.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
-		secreto.screenCenter(XY);
-		secreto.resize(400,500);
-        secreto.alpha = 0.75;
-
-		FlxG.sound.cache(Paths.inst(PlayState.SONG.song));
 		if (!isold) {
+		FlxG.sound.cache(Paths.inst(PlayState.SONG.song));
 		FlxG.sound.cache(Paths.voices(PlayState.SONG.song));
 		} else {
+		FlxG.sound.cache(Paths.inst(PlayState.SONG.song + "old"));
 		FlxG.sound.cache(Paths.voices(PlayState.SONG.song + "old"));
 		}
 		if (isRing)
@@ -407,6 +398,7 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'triple-trouble')
 			{
+				if (!FlxG.save.data.flashing){
 				daP3Static.frames = Paths.getSparrowAtlas('Phase3Static', 'exe');
 				daP3Static.animation.addByPrefix('P3Static', 'Phase3Static instance 1', 24, false);
 				add(daP3Static);
@@ -418,7 +410,6 @@ class PlayState extends MusicBeatState
 				daNoteStatic.animation.play('static');
 
 				remove(daNoteStatic);
-				if (!FlxG.save.data.flashing){
 				p3staticbg.frames = Paths.getSparrowAtlas('Phase3Static', 'exe');
 					p3staticbg.animation.addByPrefix('P3Static', 'Phase3Static instance 1', 24, true);
 					add(p3staticbg);
@@ -518,7 +509,6 @@ class PlayState extends MusicBeatState
 				preloaded = true;
 			}
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0, false);
-			// I DON CARE ABOUT YOUR OPINION : D
 		}
 		else
 			preloaded = true;
@@ -545,10 +535,14 @@ class PlayState extends MusicBeatState
 		startCircle = new FlxSprite();
 		startText = new FlxSprite();
 
+		if(!isold){
+
 		spinArray = [
 			272, 276, 336, 340, 400, 404, 464, 468, 528, 532, 592, 596, 656, 660, 720, 724, 784, 788, 848, 852, 912, 916, 976, 980, 1040, 1044, 1104, 1108,
 			1424, 1428, 1488, 1492, 1552, 1556, 1616, 1620
 		];
+		} else {spinArray = [272, 276, 336, 340, 400, 404, 464, 468, 528, 532, 592, 596, 656, 660, 720, 724, 789, 793, 863, 867, 937, 941, 1012, 1016, 1086, 1090, 1160, 1164, 1531, 1535, 1607, 1611, 1681, 1685, 1754, 1758];
+		} //OMEGA HOORAY
 
 		instance = this;
 
@@ -1181,7 +1175,7 @@ class PlayState extends MusicBeatState
 						curStage = 'EXEStage';
 						defaultCamZoom = 0.9;
 
-						var sSKY:FlxSprite = new FlxSprite(-414, -240.8).loadGraphic(Paths.image('exeBg/sky'));
+						var sSKY:FlxSprite = new FlxSprite(-414, -450.8).loadGraphic(Paths.image('exeBg/sky'));
 						sSKY.antialiasing = true;
 						sSKY.scrollFactor.set(1, 1);
 						sSKY.active = false;
@@ -1237,66 +1231,79 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = .7;
 						curStage = 'chamber';
 
-						add(secreto);
+						secreto = new FlxUIButton(0, 650, "", function() {
+						gambiarraspace = true;
+						secreto.visible = false;
+						});
+      					secreto.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
+						secreto.screenCenter(XY);
+						secreto.resize(400,500);
+        				secreto.alpha = 0.75;
 
 						wall = new FlxSprite(-2379.05, -1211.1);
 						wall.frames = Paths.getSparrowAtlas('Chamber/Wall');
 						wall.animation.addByPrefix('a', 'Wall instance 1');
+						wall.setGraphicSize(Std.int(wall.width *3));
+						add(wall);
 						wall.animation.play('a');
-						wall.setGraphicSize(Std.int(wall.width *4));
 						wall.antialiasing = true;
 						wall.scrollFactor.set(1.1, 1.1);
-						add(wall);
+						
 
 						floor = new FlxSprite(-2349, 921.25);
 						floor.antialiasing = true;
-						add(floor);
 						floor.frames = Paths.getSparrowAtlas('Chamber/Floor');
 						floor.animation.addByPrefix('a', 'floor blue');
 						floor.animation.addByPrefix('b', 'floor yellow');
+						add(floor);
 						floor.animation.play('b', true);
 						floor.animation.play('a', true); // whenever song starts make sure this is playing
 						floor.scrollFactor.set(1.1, 1);
 						floor.antialiasing = true;
+						
 
 						fleetwaybgshit = new FlxSprite(-2200, -1100.05);
-						add(fleetwaybgshit);
 						fleetwaybgshit.frames = Paths.getSparrowAtlas('Chamber/FleetwayBGshit');
 						fleetwaybgshit.setGraphicSize(Std.int(fleetwaybgshit.width * 2));
 						fleetwaybgshit.animation.addByPrefix('a', 'BGblue');
 						fleetwaybgshit.animation.addByPrefix('b', 'BGyellow');
-						fleetwaybgshit.animation.play('b', true);
+						//fleetwaybgshit.animation.play('b', true);
+						add(fleetwaybgshit);
 						fleetwaybgshit.animation.play('a', true);
 						fleetwaybgshit.antialiasing = true;
 						fleetwaybgshit.scrollFactor.set(1.1, 1);
+						
 
 						emeraldbeam = new FlxSprite(0, -1376.95 - 200);
 						emeraldbeam.antialiasing = true;
 						emeraldbeam.frames = Paths.getSparrowAtlas('Chamber/Emerald Beam');
 						emeraldbeam.animation.addByPrefix('a', 'Emerald Beam instance 1', 24, true);
+						add(emeraldbeam);
 						emeraldbeam.animation.play('a');
 						emeraldbeam.scrollFactor.set(1.1, 1);
 						emeraldbeam.visible = true; // this starts true, then when sonic falls in and screen goes white, this turns into flase
-						add(emeraldbeam);
+						
 
 						emeraldbeamyellow = new FlxSprite(-50, -1276.95);
 						emeraldbeamyellow.antialiasing = true;
 						emeraldbeamyellow.frames = Paths.getSparrowAtlas('Chamber/Emerald Beam Charged');
 						emeraldbeamyellow.setGraphicSize(Std.int(emeraldbeamyellow.width * 2));
 						emeraldbeamyellow.animation.addByPrefix('a', 'Emerald Beam Charged instance 1', 24, true);
+						add(emeraldbeamyellow);
 						emeraldbeamyellow.animation.play('a');
 						emeraldbeamyellow.scrollFactor.set(1.1, 1);
 						emeraldbeamyellow.visible = false; // this starts off on false and whenever emeraldbeam dissapears, this turns true so its visible once song starts
-						add(emeraldbeamyellow);
+						
 
 						var emeralds:FlxSprite = new FlxSprite(326.6, -191.75);
 						emeralds.antialiasing = true;
 						emeralds.frames = Paths.getSparrowAtlas('Chamber/Emeralds', 'exe');
 						emeralds.animation.addByPrefix('a', 'TheEmeralds instance 1', 24, true);
+						add(emeralds);
 						emeralds.animation.play('a');
 						emeralds.scrollFactor.set(1.1, 1);
 						emeralds.antialiasing = true;
-						add(emeralds);
+						
 
 						thechamber = new FlxSprite(250, 750);
 						thechamber.frames = Paths.getSparrowAtlas('Chamber/The Chamber');
@@ -1306,21 +1313,23 @@ class PlayState extends MusicBeatState
 						thechamber.antialiasing = true;
 
 						pebles = new FlxSprite(-562.15 + 100, 1043.3);
-						add(pebles);
 						pebles.frames = Paths.getSparrowAtlas('Chamber/pebles');
 						pebles.animation.addByPrefix('a', 'pebles instance 1');
 						pebles.animation.addByPrefix('b', 'pebles instance 2');
+						add(pebles);
 						pebles.animation.play('b', true);
 						pebles.animation.play('a',
 							true); // during cutscene this is gonna play first and then whenever the yellow beam appears, make it play "a"
 						pebles.scrollFactor.set(1.1, 1);
 						pebles.antialiasing = true;
+						
 
 						porker = new FlxSprite(3300, -200);
 						porker.frames = Paths.getSparrowAtlas('Chamber/Porker Lewis');
 						porker.setGraphicSize(Std.int(porker.width * 2));
 						porker.animation.addByPrefix('porkerbop', 'Porker FG');
 
+						
 						porker.scrollFactor.set(1.4, 1);
 						porker.antialiasing = true;
 					}
@@ -1831,7 +1840,7 @@ class PlayState extends MusicBeatState
 		// Add Kade Engine watermark
 		kadeEngineWatermark = new FlxText(4, healthBarBG.y
 			+ 50, 0,
-			(isold ? SONG.song + "-old" : SONG.song ) //BEHOLD THE TRUE POWER OF GAMBIARRA
+			(isold ? SONG.song + "- USA" : SONG.song ) //RP4 Suggestion, I agree with him
 			+ " - "
 			+ CoolUtil.difficultyFromInt(storyDifficulty)
 			+ (Main.watermarks ? " | BS Engine 0.1.1 Custom Build " : ""), 16); //For da repository guys... Idk if I can call this a custom build of BS
@@ -2083,9 +2092,9 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(startText, {alpha: 0}, 1);
 						FlxTween.tween(blackFuck, {alpha: 0}, 1);
 					});
-					case 'cant-run':
-							FlxG.camera.fade(FlxColor.BLACK, 0, true);
-							startSong();
+				case 'cant-run':
+						FlxG.camera.fade(FlxColor.BLACK, 0, true);
+						startSong();
 
 				default:
 					startCountdown();
@@ -2298,9 +2307,9 @@ class PlayState extends MusicBeatState
 				camFollow.setPosition(900, 700);
 				FlxG.camera.focusOn(camFollow.getPosition());
 				new FlxTimer().start(0.5, function(lol:FlxTimer)
-				{	//Actually why just this song has this if condition?
-					//if (preloaded) //This looks like SUS
-					//{ 
+				{
+					if (preloaded) 
+					{ 
 						new FlxTimer().start(1, function(lol:FlxTimer)
 						{
 							FlxTween.tween(FlxG.camera, {zoom: 1.5}, 3, {ease: FlxEase.cubeOut});
@@ -2325,11 +2334,11 @@ class PlayState extends MusicBeatState
 							emeraldbeamyellow.visible = true;
 							emeraldbeam.visible = false;
 						});
-				//	}
-				//	else
-				//		lol.reset();
-				});
-			} else if(curSong == 'chaos') {
+					}
+					else {
+						lol.reset();
+				}});
+			} else if(curSong == 'chaos' && PlayStateChangeables.Optimize) {
 				startCountdown();
 			}
 			switch (curSong)
@@ -2348,6 +2357,7 @@ class PlayState extends MusicBeatState
 
 	function staticHitMiss()
 	{
+		if (!FlxG.save.data.flashing){
 		trace('lol you missed the static note!');
 		daNoteStatic = new FlxSprite(0, 0);
 		daNoteStatic.frames = Paths.getSparrowAtlas('hitStatic');
@@ -2381,6 +2391,7 @@ class PlayState extends MusicBeatState
 			trace('ended HITSTATICLAWL');
 			if (!FlxG.save.data.flashing){remove(daNoteStatic);}
 		});
+	}
 	}
 
 	function doStaticSign(lestatic:Int = 0, leopa:Bool = true)
@@ -2671,14 +2682,14 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.play(Paths.sound('laser'));
 
-		var warning:FlxSprite = new FlxSprite();
+	/*	var warning:FlxSprite = new FlxSprite();
 		warning.frames = Paths.getSparrowAtlas('Warning', 'exe');
 		warning.cameras = [camHUD2];
 		warning.scale.set(0.5, 0.5);
 		warning.screenCenter();
 		warning.animation.addByPrefix('a', 'Warning Flash', 24, false);
 		warning.alpha = 0;
-		add(warning);
+		add(warning); */ //This could be one of the thirten reasons why...
 		canDodge = true;
 
 		var dodgething:FlxSprite = new FlxSprite(0, 600);
@@ -2691,16 +2702,16 @@ class PlayState extends MusicBeatState
 		dodgething.x -= 60;
 		dodgething.cameras = [camHUD2];
 		secreto.visible = true;
+		mcontrols.visible = false;
 		add(dodgething);
+		add(secreto);
 
 		new FlxTimer().start(0, function(a:FlxTimer)
 		{
 			s++;
-			warning.animation.play('a', true);
+		//	warning.animation.play('a', true);
 			if (s < 4)
 				a.reset(0.32);
-			else
-				remove(warning);
 			if (s == 3)
 			{
 				remove(dad);
@@ -3274,8 +3285,8 @@ class PlayState extends MusicBeatState
 				ana.hit = false;
 				ana.hitJudge = "shit";
 				ana.nearestNote = [];
-				if (curSong != 'black-sun' && cNum == 0)
-					health -= 0.04;
+			//	if (curSong != 'black-sun' && cNum == 0)
+				//	health -= 0.04;
 			}
 		}
 	}
@@ -3291,7 +3302,9 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 		{
+			if(!isold){
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			} else {FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song + "old"), 1, false);}
 		}
 
 		FlxG.sound.music.onComplete = function() // skill issue + ratio + blocked + didn't ask.
@@ -3967,7 +3980,7 @@ class PlayState extends MusicBeatState
 					if (combo > 40)
 						ccap = 40;
 
-					heatlhDrop = 0.0000001; // this is the default drain, imma just add a 0 to it :troll:.
+					heatlhDrop = 0.000001; // this is the default drain, imma just add a 0 to it :troll:. - Tirei um zerinho kek
 					health -= heatlhDrop * (500 / ((ccap + 1) / 8) * ((misses +
 						1) / 1.9)); // alright so this is the code for the healthdrain, also i did + 1 cus i you were to multiply with 0.... yea
 					vgblack.alpha = 1 - (health / 2);
@@ -4459,7 +4472,7 @@ class PlayState extends MusicBeatState
 							camFollow.x = dad.getMidpoint().x + 120;
 						case 'sonicLordXold':
 							camFollow.y = dad.getMidpoint().y - 25;
-							camFollow.x = dad.getMidpoint().x + 120;
+							camFollow.x = dad.getMidpoint().x + 180;
 						case 'sunky':
 							camFollow.y = dad.getMidpoint().y - 30;
 							camFollow.x = dad.getMidpoint().x + 120;
@@ -4965,8 +4978,8 @@ class PlayState extends MusicBeatState
 						if (daNote.noteType == 2)
 						{
 							noteMiss(daNote.noteData, daNote);
-							if (curSong != 'black-sun' && cNum == 0)
-								health -= 0.3; //not this
+							//if (curSong != 'black-sun' && cNum == 0)
+							//	health -= 0.0475; //not this
 							staticHitMiss();
 							new FlxTimer().start(.38, function(trol:FlxTimer) // fixed lmao
 							{
@@ -4979,8 +4992,8 @@ class PlayState extends MusicBeatState
 						{
 							if (isRing && daNote.noteData != 2)
 							{
-								if (curSong != 'black-sun' && cNum == 0)
-									health -= 0.075; //idk
+							//	if (curSong != 'black-sun' && cNum == 0)
+								//	health -= 0.0475; //idk
 								vocals.volume = 0;
 								if (theFunne)
 									noteMiss(daNote.noteData, daNote);
@@ -5924,13 +5937,14 @@ private function keyShit():Void // I've invested in emma stocks
 	}*/
 
 	function noteMiss(direction:Int = 1, daNote:Note):Void
-	{	if (curSong != 'black-sun'){
-			health -= 0.0475;} //This is also from psych Engine
+	{	//if (curSong != 'black-sun'){
+			//health -= 0.0475;} //This is also from psych Engine
 		if (!boyfriend.stunned)
 		{
+			health -= 0.0475; //I Think this should spicy things a little bit
 			if (curSong != 'black-sun' && cNum == 0)
 			{
-				health -= 0.04;
+				health -= 0.0001; //preventing a compilation bug in a uncommon way
 			}
 			else
 				cNum -= 1;
@@ -6055,8 +6069,8 @@ private function keyShit():Void // I've invested in emma stocks
 			}
 		});
 		if (possibleNotes.length == 1)
-			return possibleNotes.length + 1;
-		return possibleNotes.length;
+			return possibleNotes.length + 5;
+		return possibleNotes.length + 5; //Hmmmmm maybe?
 	}
 
 	var mashing:Int = 0;
@@ -6441,7 +6455,7 @@ private function keyShit():Void // I've invested in emma stocks
 			shakeCam2 = false;
 		}
 
-		if (curStage == 'sonicFUNSTAGE' && curStep != stepOfLast)
+		if (curStage == 'sonicFUNSTAGE' && curStep != stepOfLast && !isold)
 		{
 			switch (curStep)
 			{
@@ -6464,6 +6478,31 @@ private function keyShit():Void // I've invested in emma stocks
 					removeStatics();
 					generateStaticArrows(0, false);
 					generateStaticArrows(1, false);
+			}
+		} else if (curStage == 'sonicFUNSTAGE' && curStep != stepOfLast && isold)
+		{
+
+			switch(curStep) //Fixed DXGAMER...
+			{
+				case 909:
+				camLocked = false;
+				camFollow.setPosition(GameDimensions.width / 2 + 200, GameDimensions.height / 4 * 3 + 100);
+				FlxTween.tween(FlxG.camera, {zoom: FlxG.camera.zoom + 0.3}, 0.7, {ease: FlxEase.cubeInOut});
+				three();
+				case 914:
+				FlxTween.tween(FlxG.camera, {zoom: FlxG.camera.zoom + 0.3}, 0.7, {ease: FlxEase.cubeInOut});
+				two();
+				case 918:
+				FlxTween.tween(FlxG.camera, {zoom: FlxG.camera.zoom + 0.3}, 0.7, {ease: FlxEase.cubeInOut});
+				one();
+				case 923:
+				camLocked = true;
+				FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.7, {ease: FlxEase.cubeInOut});
+				gofun();
+				SONG.noteStyle = 'majinNOTES';
+				removeStatics();
+				generateStaticArrows(0, false);
+				generateStaticArrows(1, false);
 			}
 		}
 
@@ -6559,7 +6598,7 @@ private function keyShit():Void // I've invested in emma stocks
 					doStaticSign(0);
 				case 1909:
 					doStaticSign(0);
-				case 2000: //haha
+				case 1950: //haha
 					doJumpscare();
 			}
 			stepOfLast = curStep;

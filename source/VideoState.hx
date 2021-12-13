@@ -21,7 +21,7 @@ class VideoState extends MusicBeatState
 	{
 		super();
 
-		text = new FlxText(0, 0, 0, "tap to continue", 48);
+		text = new FlxText(0, 0, 0, "Toque para continuar", 48);
 		text.screenCenter();
 		text.alpha = 0;
 		add(text);
@@ -49,7 +49,7 @@ class VideoState extends MusicBeatState
 		//FlxG.autoPause = true;
 		trace('close!');
 		trace(nextState);
-		FlxG.switchState(nextState);
+		MusicBeatState.switchState(nextState);
 	}
 
 	function onURLChanging(url:String) {

@@ -56,6 +56,10 @@ class GameOverSubstate extends MusicBeatSubstate
 		bluevg.alpha = 0;
 		add(bluevg);
 
+		if(PauseSubState.cantescapecounter > 9){
+			PlayState.SONG.song = 'black-sun';
+			PauseSubState.cantescapecounter = 0;}// Forçando a barra
+
 		coolcamera = new FlxCamera();
 		coolcamera.bgColor.alpha = 0;
 		FlxG.cameras.add(coolcamera);
@@ -152,7 +156,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		else if (PlayState.SONG.song.toLowerCase() == 'black-sun' || PlayState.SONG.song.toLowerCase() == 'sunshine' || PauseSubState.cantescapecounter > 9)
 		{
 			bf.alpha = 0;
-			PauseSubState.cantescapecounter = 0;
 			bfdeathshit.frames = Paths.getSparrowAtlas('exedeath');
 			bfdeathshit.setGraphicSize(Std.int(bfdeathshit.width * 1.9));
 			bfdeathshit.setPosition(-673, -378);
@@ -242,6 +245,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		toolateurfucked = true;
 		
 		if(PlayState.SONG.song.toLowerCase() != 'you-cant-run' || PauseSubState.cantescapecounter > 9){ //just to be sure that this stuff actually works
+
 		switch (PlayState.SONG.song)
 		{
 			case 'endless':
@@ -353,9 +357,9 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.sound.music.stop();
 
 				if (PlayState.isStoryMode)
-					FlxG.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new StoryMenuState());
 				else
-					FlxG.switchState(new MainMenuState());
+					MusicBeatState.switchState(new MainMenuState());
 				PlayState.loadRep = false;
 			}
 		}

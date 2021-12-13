@@ -39,7 +39,7 @@ class PauseSubState extends MusicBeatSubstate
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
-		fuga = new FlxSound().loadEmbedded(Paths.sound('deniedMOMENT'), true, true);
+		fuga = new FlxSound().loadEmbedded(Paths.sound('deniedMOMENT'));
 		//E eu lhe respondo, eu estava com preguiça... Mas não tive preguiça de escrever este belo texto
 
 		FlxG.sound.list.add(pauseMusic);
@@ -245,7 +245,7 @@ class PauseSubState extends MusicBeatSubstate
 					if (FlxG.save.data.fpsCap > 290)
 						(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 					
-					FlxG.switchState(new MainMenuState());
+					MusicBeatState.switchState(new MainMenuState());
 			}
 		}
 

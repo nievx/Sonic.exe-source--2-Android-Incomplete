@@ -175,7 +175,7 @@ class SoundTestMenu extends MusicBeatState
 			});
 			if (!FlxG.save.data.songArray.contains('endless') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('endless');
 		}
-		if (first == 25 && second == 12)
+		else if (first == 25 && second == 12)
 			{
 				woahmanstopspammin = false;
 				PlayState.isold = true;

@@ -1,6 +1,9 @@
 package;
 
+import flixel.addons.effects.FlxTrail;
+import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 using StringTools;
@@ -27,8 +30,8 @@ class SonicDeathAnimation extends FlxSprite
             tex = Paths.getSparrowAtlas('characters/DeathScreenSonicExe');
 			frames = tex;
 			animation.addByPrefix('firstDEATH', 'appear', 24, false);
-			animation.addByPrefix('loopDEATH', 'deathLoopSonicExe', 15, true);
-            animation.addByPrefix('retry', 'deathConfirmSonicExe', 10, false);
+			animation.addByPrefix('loopDEATH', 'deathLoopSonicExe', 24, true);
+            animation.addByPrefix('retry', 'deathConfirmSonicExe', 24, false);
 
             addOffset('firstDEATH', 0, 0);
             addOffset('loopDEATH', -25, -80);
