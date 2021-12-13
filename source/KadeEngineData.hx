@@ -10,8 +10,8 @@ class KadeEngineData
 		
 		if (FlxG.save.data.storyProgress == null) // Data erase fuck you.
 		{
-			FlxG.save.data.storyProgress = 0;
-			FlxG.save.data.soundTestUnlocked = false;
+			FlxG.save.data.storyProgress = 2;
+			FlxG.save.data.soundTestUnlocked = true;
 			
 		}
 
@@ -31,7 +31,7 @@ class KadeEngineData
 			FlxG.save.data.jumpscares = true;
 
 		if (FlxG.save.data.soundTestUnlocked == null)
-			FlxG.save.data.soundTestUnlocked = false;
+			FlxG.save.data.soundTestUnlocked = true;
 
         if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;

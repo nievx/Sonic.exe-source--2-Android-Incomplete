@@ -5718,33 +5718,29 @@ private function keyShit():Void // I've invested in emma stocks
 	 
 				possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
 	 
-				var dontCheck = false;
-
-				for (i in 0...pressArray.length)
-				{
-					if (pressArray[i] && !directionList.contains(i))
-						dontCheck = true;
-				}
+				var hit = [false, false, false, false];
 
 				if (perfectMode)
 					goodNoteHit(possibleNotes[0]);
-				else if (possibleNotes.length > 0 && !dontCheck)
+				else if (possibleNotes.length > 0)
 				{
 					if (!FlxG.save.data.ghost)
 					{
 						for (shit in 0...pressArray.length)
-							{ // if a direction is hit that shouldn't be
-								if (pressArray[shit] && !directionList.contains(shit))
-									noteMiss(shit, null);
-							}
+						{ // if a direction is hit that shouldn't be
+							if (pressArray[shit] && !directionList.contains(shit))
+								noteMiss(shit, null);
+						}
 					}
 					for (coolNote in possibleNotes)
 					{
-						if (pressArray[coolNote.noteData])
+						if (pressArray[coolNote.noteData] && !hit[coolNote.noteData])
 						{
 							if (mashViolations != 0)
 								mashViolations--;
+							hit[coolNote.noteData] = true;
 							scoreTxt.color = FlxColor.WHITE;
+							var noteDiff:Float = -(coolNote.strumTime - Conductor.songPosition);
 							goodNoteHit(coolNote);
 						}
 					}
@@ -5755,25 +5751,13 @@ private function keyShit():Void // I've invested in emma stocks
 							if (pressArray[shit])
 								noteMiss(shit, null);
 					}
-
-					if(dontCheck && possibleNotes.length > 0 && FlxG.save.data.ghost && !PlayStateChangeables.botPlay)
-						{
-							if (mashViolations > 8)
-							{
-								trace('mash violations ' + mashViolations);
-								scoreTxt.color = FlxColor.RED;
-								noteMiss(0,null);
-							}
-							else
-								mashViolations++;
-			}
-
-		}
+				}
+	
 				/*if (!loadRep)
 					for (i in anas)
 						if (i != null)
-							replayAna.anaArray.push(i); // put em all there*/
-			
+							replayAna.anaArray.push(i); // put em all there
+			*/
 			notes.forEachAlive(function(daNote:Note)
 			{
 				if(PlayStateChangeables.useDownscroll && daNote.y > strumLine.y ||
@@ -6069,8 +6053,8 @@ private function keyShit():Void // I've invested in emma stocks
 			}
 		});
 		if (possibleNotes.length == 1)
-			return possibleNotes.length + 5;
-		return possibleNotes.length + 5; //Hmmmmm maybe?
+			return possibleNotes.length + 1;
+		return possibleNotes.length; //Hmmmmm maybe?
 	}
 
 	var mashing:Int = 0;
@@ -6124,7 +6108,9 @@ private function keyShit():Void // I've invested in emma stocks
 	}
 
 	function goodNoteHit(note:Note, resetMashViolation = true):Void
-	{
+		{
+			if (mashing != 0)
+				mashing = 0;
 
 		health += 0.023; //This is actually from psych Engine
 		if (isRing && note.noteData == 2 && !note.isSustainNote)
@@ -6153,8 +6139,6 @@ private function keyShit():Void // I've invested in emma stocks
 			else
 				fuckyou = 0;
 		}
-		if (mashing != 0)
-			mashing = 0;
 
 		var noteDiff:Float = -(note.strumTime - Conductor.songPosition);
 
