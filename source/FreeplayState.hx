@@ -79,14 +79,14 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 					var char:FlxSprite = new FlxSprite(fuck * 780, 0).loadGraphic(Paths.image('fpstuff/' + songArray[fuck].toLowerCase()));
 					boxgrp.add(char);
 
-					var daStatic:FlxSprite = new FlxSprite();		
+					/*var daStatic:FlxSprite = new FlxSprite();		
 					daStatic.frames = Paths.getSparrowAtlas('daSTAT');	
 					daStatic.alpha = 0.2;	
 					daStatic.setGraphicSize(620, 465);			
 					daStatic.setPosition((fuck * 780) + 440, 211);	
 					daStatic.animation.addByPrefix('static','staticFLASH', 24, true);			
 					boxgrp.add(daStatic);
-					daStatic.animation.play('static');
+					daStatic.animation.play('static'); */
 
 					fuck += 1;
 				}
@@ -167,11 +167,11 @@ class FreeplayState extends MusicBeatState // REWRITE FREEPLAY!?!?!? HELL YEA!!!
 		
 		
 		if (accepted && cdman && songArray[0] != 'lol')
-		{
-			cdman = false;
-
-			switch (songArray[curSelected]) // Some charts don't include -hard in their file name so i decided to get focken lazy.
 			{
+				cdman = false;
+	
+				switch (songArray[curSelected]) // Some charts don't include -hard in their file name so i decided to get focken lazy.			{
+				{
 				case "milk":
 					PlayState.SONG = Song.loadFromJson('milk', 'milk');
 				case "sunshine":

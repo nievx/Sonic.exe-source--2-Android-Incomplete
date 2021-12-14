@@ -1,22 +1,21 @@
 package;
 
-import Config;
+import flixel.ui.FlxButton;
+import flixel.addons.ui.FlxUIButton;
+import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.ui.FlxUIButton;
-import flixel.math.FlxPoint;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import haxe.Json;
 import ui.FlxVirtualPad;
+import flixel.math.FlxPoint;
+import haxe.Json;
 import ui.Hitbox;
-
-using StringTools;
+import Config;
 #if lime
 import lime.system.Clipboard;
 #end
 
+using StringTools;
 
 class CustomControlsState extends MusicBeatSubstate
 {
@@ -58,10 +57,12 @@ class CustomControlsState extends MusicBeatSubstate
 
 		// bg
 		bg = new FlxSprite().loadGraphic(Paths.image('BackGROUND'));
+		bg.scrollFactor.x = 0;
+		bg.scrollFactor.y = 0.18;
+		bg.setGraphicSize(Std.int(bg.width * 1.1));
+		bg.updateHitbox();
 		bg.screenCenter();
-		bg.setGraphicSize(1280, 720);
-		bg.color = 0xFFfd719b;
-		add(bg);
+		bg.antialiasing = true;
 
 		// load curSelected
 		curSelected = config.getcontrolmode();
@@ -111,7 +112,7 @@ class CustomControlsState extends MusicBeatSubstate
 
 		var savebutton = new FlxUIButton((exitbutton.x + exitbutton.width + 25),25,"Sair e Salvar",() -> {
 			save();
-			MusicBeatState.switchState(new OptionsMenu());
+			FlxG.switchState(new OptionsMenu());
 		});
 		savebutton.resize(250,50);
 		savebutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
@@ -165,7 +166,7 @@ class CustomControlsState extends MusicBeatSubstate
 		var androidback:Bool = false;
 		#end
 		if (exitbutton.justReleased || androidback){
-			MusicBeatState.switchState(new OptionsMenu());
+			FlxG.switchState(new OptionsMenu());
 		}
 
 		for (touch in FlxG.touches.list){
@@ -192,7 +193,7 @@ class CustomControlsState extends MusicBeatSubstate
 				curSelected = controlitems.length - 1;
 			if (curSelected >= controlitems.length)
 				curSelected = 0;
-			trace(curSelected);
+			//trace(curSelected);
 
 			if (forceChange != null)
 			{
@@ -226,10 +227,10 @@ class CustomControlsState extends MusicBeatSubstate
 					_pad.alpha = 0.75;
 					this.add(_pad);
 				case 2:
-					trace(2);
+					//trace(2);
 					_pad.alpha = 0;
 				case 3:
-					trace(3);
+					//trace(3);
 					this.add(_pad);
 					_pad.alpha = 0.75;
 					loadcustom();
@@ -332,7 +333,7 @@ class CustomControlsState extends MusicBeatSubstate
 	}
 
 	function savecustom() {
-		trace("saved");
+		//trace("saved");
 
 		//Config.setdata(55);
 
@@ -354,7 +355,7 @@ class CustomControlsState extends MusicBeatSubstate
 	}
 
 	function savetoclipboard(pad:FlxVirtualPad) {
-		trace("saved");
+		//trace("saved");
 
 		var json = {
 			buttonsarray : []
@@ -372,7 +373,7 @@ class CustomControlsState extends MusicBeatSubstate
 
 		json.buttonsarray = buttonsarray;
 
-		trace(json);
+		//trace(json);
 
 		var data:String = Json.stringify(json);
 

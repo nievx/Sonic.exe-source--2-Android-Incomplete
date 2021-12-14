@@ -311,15 +311,166 @@ class SoundTestMenu extends MusicBeatState
 				cameoImg.loadGraphic(Paths.image('cameostuff/Razencro'));
 				cameoImg.setSize(1280, 720);
 				flashyWashy(false);
-				FlxG.sound.music.stop();
-
-			});
-			new FlxTimer().start(2.1, function(tmr:FlxTimer)
+					FlxG.sound.music.stop();
+	
+				});
+				new FlxTimer().start(2.1, function(tmr:FlxTimer)
+				{
+					incameo = true;
+				});
+			}
+			else if (first == 6 && second == 4) //Buff GF
+				{
+					woahmanstopspammin = false;
+					flashyWashy(true);
+					new FlxTimer().start(2, function(tmr:FlxTimer)
+					{
+						cameoImg.visible = true;
+						cameoImg.loadGraphic(Paths.image('cameostuff/HD em HD'));
+						cameoImg.setSize(1280, 720);
+						flashyWashy(false);
+							FlxG.sound.music.stop();
+			
+						});
+						new FlxTimer().start(2.1, function(tmr:FlxTimer)
+						{
+							incameo = true;
+						});
+					}
+					else if (first == 11 && second == 11) //Buff GF
+						{
+							woahmanstopspammin = false;
+							flashyWashy(true);
+							new FlxTimer().start(2, function(tmr:FlxTimer)
+							{
+								cameoImg.visible = true;
+								cameoImg.loadGraphic(Paths.image('cameostuff/Buff GF'));
+								cameoImg.setSize(1280, 720);
+								flashyWashy(false);
+									FlxG.sound.music.stop();
+					
+								});
+								new FlxTimer().start(2.1, function(tmr:FlxTimer)
+								{
+									incameo = true;
+								});
+							}
+		else if (first == 1 && second == 1) 
 			{
-				FlxG.sound.playMusic(Paths.music('cameostuff/Razencro'));	
-				incameo = true;
-			});
-		}
+				woahmanstopspammin = false;
+				flashyWashy(true);
+				new FlxTimer().start(2, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new VideoState('assets/videos/festinha', new SoundTestMenu())); 
+	
+				});
+			}
+			else if (first == 25 && second == 13) 
+				{
+					woahmanstopspammin = false;
+					flashyWashy(true);
+					new FlxTimer().start(2, function(tmr:FlxTimer)
+					{
+						LoadingState.loadAndSwitchState(new VideoState('assets/videos/f de fudeu', new SoundTestMenu())); 
+		
+					});
+				}
+				else if (first == 4 && second == 7) 
+					{
+						woahmanstopspammin = false;
+						flashyWashy(true);
+						new FlxTimer().start(2, function(tmr:FlxTimer)
+						{
+							LoadingState.loadAndSwitchState(new VideoState('assets/videos/a treta', new SoundTestMenu())); 
+			
+						});
+					}
+					else if (first == 3 && second == 1) 
+						{
+							woahmanstopspammin = false;
+							flashyWashy(true);
+							new FlxTimer().start(2, function(tmr:FlxTimer)
+							{
+								LoadingState.loadAndSwitchState(new VideoState('assets/videos/du ai luke laike ai nidi yo poweee bruda', new SoundTestMenu())); 
+				
+							});
+						}
+						else if (first == 24 && second == 6) //Entendeu a data do código? 
+						{
+							woahmanstopspammin = false;
+							flashyWashy(true);
+							new FlxTimer().start(2, function(tmr:FlxTimer)
+							{
+								LoadingState.loadAndSwitchState(new VideoState('assets/videos/superidoldexoneyobinikekienda mas miku', new SoundTestMenu())); 
+				
+							});
+						}
+						else if (first == 9 && second == 11)
+							{
+								woahmanstopspammin = false;
+								flashyWashy(true);
+								new FlxTimer().start(2, function(tmr:FlxTimer)
+								{
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/can-can', new SoundTestMenu())); 
+					
+								});
+							}
+			else if (first == 20 && second == 15) 
+				{
+					woahmanstopspammin = false;
+					flashyWashy(true);
+					new FlxTimer().start(2, function(tmr:FlxTimer)
+					{
+						cameoImg.visible = true;
+						cameoImg.loadGraphic(Paths.image('cameostuff/Sonic ta bem e vai jogar no vasco'));
+						cameoImg.setSize(1280, 720);
+						flashyWashy(false);
+						FlxG.sound.music.stop();
+	
+					});
+					new FlxTimer().start(2.1, function(tmr:FlxTimer)
+					{
+						incameo = true;
+					});
+				}
+				else if (first == 10 && second == 10) 
+					{
+						woahmanstopspammin = false;
+						flashyWashy(true);
+						new FlxTimer().start(2, function(tmr:FlxTimer)
+						{
+							LoadingState.loadAndSwitchState(new VideoState('assets/videos/10 de 10', new SoundTestMenu())); 
+			
+						});
+						}
+						else if (first == 12 && second == 37) 
+							{
+								woahmanstopspammin = false;
+								flashyWashy(true);
+								new FlxTimer().start(2, function(tmr:FlxTimer)
+								{
+									LoadingState.loadAndSwitchState(new VideoState('assets/videos/truegameplay', new SoundTestMenu())); 
+					
+								});
+								}
+				else if (first == 7 && second == 9) 
+					{
+						woahmanstopspammin = false;
+						flashyWashy(true);
+						new FlxTimer().start(2, function(tmr:FlxTimer)
+						{
+							cameoImg.visible = true;
+							cameoImg.loadGraphic(Paths.image('cameostuff/Entendeu'));
+							cameoImg.setSize(1280, 720);
+							flashyWashy(false);
+							FlxG.sound.music.stop();
+	
+						});
+						new FlxTimer().start(2.1, function(tmr:FlxTimer)
+						{
+							incameo = true;
+						});
+					}
 		else if (first == 1 && second == 13) // This for you div, R.I.P
 			{
 				woahmanstopspammin = false;

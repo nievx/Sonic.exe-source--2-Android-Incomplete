@@ -38,7 +38,7 @@ class StoryMenuState extends MusicBeatState
 
 	var songArray = ['too-slow', 'you-cant-run', 'triple-trouble'];
 
-	var staticscreen:FlxSprite;
+	//var staticscreen:FlxSprite;
 	var portrait:FlxSprite;
 
 	override function create()
@@ -61,7 +61,7 @@ class StoryMenuState extends MusicBeatState
 		bg.animation.play('idlexd');
 		bg.alpha = 1;
 		bg.antialiasing = true;
-		bg.setGraphicSize(Std.int(bg.width));
+		bg.setGraphicSize(Std.int(bg.width * 2));
 		bg.updateHitbox();
 		add(bg);
 
@@ -88,7 +88,7 @@ class StoryMenuState extends MusicBeatState
 		portrait.updateHitbox();
 		add(portrait);
 
-		staticscreen = new FlxSprite(450, 0);
+	/*	staticscreen = new FlxSprite(450, 0);
 		staticscreen.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
 		staticscreen.animation.addByPrefix('screenstaticANIM', "screenSTATIC", 24);
 		staticscreen.animation.play('screenstaticANIM');
@@ -97,7 +97,7 @@ class StoryMenuState extends MusicBeatState
 		staticscreen.antialiasing = true;
 		staticscreen.setGraphicSize(Std.int(staticscreen.width * 0.275));
 		staticscreen.updateHitbox();
-		add(staticscreen);
+		add(staticscreen); */
 
 		var yellowBOX:FlxSprite;
 		yellowBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('yellowbox'));
@@ -206,9 +206,9 @@ class StoryMenuState extends MusicBeatState
 
 			portrait.loadGraphic(Paths.image('fpstuff/' + songArray[real]));
 
-			FlxTween.cancelTweensOf(staticscreen);
-			staticscreen.alpha = 1;
-			FlxTween.tween(staticscreen, {alpha: 0.3}, 1);
+		//	FlxTween.cancelTweensOf(staticscreen);
+		//	staticscreen.alpha = 1;
+		//	FlxTween.tween(staticscreen, {alpha: 0.3}, 1);
 		}
 	}
 

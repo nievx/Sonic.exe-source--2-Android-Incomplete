@@ -226,9 +226,9 @@ class MainMenuState extends MusicBeatState
 				urmom += 1;
 				if (urmom == 30)
 				{
-					FlxG.save.data.storyProgress = 0; // lol.
-					FlxG.save.data.soundTestUnlocked = false;
-					FlxG.save.data.songArray = [];
+					FlxG.save.data.storyProgress = 2; // lol.
+					FlxG.save.data.soundTestUnlocked = true;
+					FlxG.save.data.songArray = ["endless", 'cycles',"milk", "sunshine", 'faker', 'black-sun', "chaos"];
 					MusicBeatState.switchState(new MainMenuState());
 				}
 				if (FlxG.keys.pressed.DELETE)

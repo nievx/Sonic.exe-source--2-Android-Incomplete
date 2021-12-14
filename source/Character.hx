@@ -212,6 +212,7 @@ class Character extends FlxSprite
 				frames = tex;
 
 				trace(tex.frames.length);
+				trace("i am being loaded");
 
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -257,6 +258,7 @@ class Character extends FlxSprite
 				frames = tex;
 
 				trace(tex.frames.length);
+				trace("i am being loaded");
 
 				animation.addByPrefix('idle', 'Idle', 24, false);
 				animation.addByPrefix('singUP', 'Sing_Up', 24, false);
@@ -287,6 +289,7 @@ class Character extends FlxSprite
 				frames = tex;
 
 				trace(tex.frames.length);
+				trace("i am being loaded");
 
 				animation.addByPrefix('idle', 'Idle_Flip', 24, false);
 				animation.addByPrefix('singUP', 'Sing_Up_Flip', 24, false);
@@ -387,19 +390,17 @@ class Character extends FlxSprite
 			case 'sonic':
 				tex = Paths.getSparrowAtlas('characters/Sonic_EXE_Assets');
 				frames = tex;
-				animation.addByPrefix('idle', 'SONICmoveIDLE', 20, true); //sprite adaptationpurposes
+				animation.addByPrefix('idle', 'SONICmoveIDLE', 24, true); //sprite adaptationpurposes
 				animation.addByPrefix('singUP', 'SONICmoveUP', 24);
 				animation.addByPrefix('singRIGHT', 'SONICmoveRIGHT', 24);
 				animation.addByPrefix('singDOWN', 'SONICmoveDOWN', 24);
 				animation.addByPrefix('singLEFT', 'SONICmoveLEFT', 24);
-				animation.addByPrefix('iamgod', 'sonicImmagetya', 24, false);
 
 				animation.addByPrefix('singDOWN-alt', 'SONIClaugh', 24);
 
 				animation.addByPrefix('singLAUGH', 'SONIClaugh', 24);
 
 				addOffset('idle');
-				addOffset('iamgod', 127, 10);
 				addOffset("singUP", 14, 47);
 				addOffset("singRIGHT", 16, 14);
 				addOffset("singLEFT", 152, -15);
@@ -409,6 +410,16 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", 50, -10);
 
 				playAnim('idle');
+			case 'sonic1':
+				tex = Paths.getSparrowAtlas('characters/Sonic_EXE_Assets1');
+				frames = tex;
+
+					animation.addByPrefix('iamgod', 'sonicImmagetya', 24, false);
+
+					updateHitbox();
+
+					addOffset('iamgod', 127, 10);
+	
 			case 'sonicfun':
 				tex = Paths.getSparrowAtlas('characters/SonicFunAssets');
 				frames = tex;
@@ -544,6 +555,7 @@ class Character extends FlxSprite
 			case 'bf-super':
 				tex = Paths.getSparrowAtlas('characters/Super_BoyFriend_Assets');
 				frames = tex;
+				trace("i am being loaded");
 
 				animation.addByPrefix('idle', 'BF Super idle dance instance 1', 24);
 				animation.addByPrefix('singUP', 'BF NOTE UP instance 1', 24);
@@ -625,6 +637,7 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 177, -24);
 				addOffset("singDOWN", -15, -57);
 				addOffset("laugh", -78, -128);
+				trace("i am being loaded");
 
 				antialiasing = true;
 
@@ -638,6 +651,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Beast_LEFT', 24, false);
 				animation.addByPrefix('singRIGHT', 'Beast_RIGHT', 24, false);
 				animation.addByPrefix('laugh', 'Beast_LAUGH', 24, false);
+				trace("i am being loaded");
 
 				addOffset('idle', -18, 70);
 				addOffset("singUP", 22, 143);
@@ -709,6 +723,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 124, -59);
 				addOffset("singLEFT", -59, -65);
 				addOffset("singDOWN", 26, -95);
+				trace("i am being loaded");
 
 				flipX = true;
 
@@ -720,6 +735,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Tails RIGHT', 24);
 				animation.addByPrefix('singDOWN', 'Tails DOWN', 24);
 				animation.addByPrefix('singLEFT', 'Tails LEFT', 24);
+				trace("i am being loaded");
 
 				addOffset('idle', 0, 0);
 				addOffset("singUP", 29, 49);
@@ -746,6 +762,7 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 237, 97);
 				addOffset("singDOWN", 49, -95);
 				addOffset('laugh', -10, 210);
+				trace("i am being loaded");
 
 				updateHitbox();
 
@@ -765,6 +782,7 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 221, -129);
 				addOffset("singDOWN", 0, -168);
 				addOffset("fastanim", 0, 0);
+				trace("i am being loaded");
 
 				updateHitbox();
 
@@ -931,7 +949,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft');
 
-				case 'fleetway-extras', 'fleetway-extras2', 'fleetway-extras3':
+				case 'fleetway-extras', 'fleetway-extras2', 'fleetway-extras3', 'sonic1':
 
 				default:
 					playAnim('idle');

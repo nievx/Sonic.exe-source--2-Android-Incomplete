@@ -6,7 +6,7 @@ class KadeEngineData
 {
     public static function initSave()
     {
-		if (FlxG.save.data.songArray == null) FlxG.save.data.songArray = [];
+		if (FlxG.save.data.songArray == null) FlxG.save.data.songArray = ["endless", 'cycles', "milk", "sunshine", 'faker', 'black-sun', "chaos"];
 		
 		if (FlxG.save.data.storyProgress == null) // Data erase fuck you.
 		{
