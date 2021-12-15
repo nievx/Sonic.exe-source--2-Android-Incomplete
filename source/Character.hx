@@ -393,7 +393,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('idle', 'SONICmoveIDLE', 24); //sprite adaptationpurposes
 				animation.addByPrefix('singUP', 'SONICmoveUP', 24);
 				animation.addByPrefix('singRIGHT', 'SONICmoveRIGHT', 24);
-				animation.addByPrefix('singOWN', 'SONICmoveDOWN', 24); 
+				animation.addByPrefix('singDOWN', 'SONICmoveOWN', 24); 
 				animation.addByPrefix('singLEFT', 'SONICmoveLEFT', 24); //This is important
 
 				animation.addByPrefix('singDOWN-alt', 'SONIClaugh', 24);
