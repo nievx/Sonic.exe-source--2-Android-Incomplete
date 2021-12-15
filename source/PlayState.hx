@@ -469,8 +469,8 @@ class PlayState extends MusicBeatState
 			}
 			else if (SONG.song.toLowerCase() == 'chaos')
 			{
-				FlxG.bitmap.add(Paths.image('characters/fleetway1', 'shared'));
-				FlxG.bitmap.add(Paths.image('characters/fleetway2', 'shared'));
+				//FlxG.bitmap.add(Paths.image('characters/fleetway1', 'shared'));
+				//FlxG.bitmap.add(Paths.image('characters/fleetway2', 'shared'));
 				//FlxG.bitmap.add(Paths.image('characters/fleetway3', 'shared')); sorry, this was nescessary
 			//	FlxG.bitmap.add(Paths.image('Warning', 'exe'));
 				FlxG.bitmap.add(Paths.image('spacebar_icon', 'exe'));
@@ -1256,7 +1256,7 @@ class PlayState extends MusicBeatState
 						floor.antialiasing = true;
 						
 
-						fleetwaybgshit = new FlxSprite(-2200, -600);
+						fleetwaybgshit = new FlxSprite(-2000, -700);
 						fleetwaybgshit.frames = Paths.getSparrowAtlas('Chamber/FleetwayBGshit');
 						fleetwaybgshit.setGraphicSize(Std.int(fleetwaybgshit.width * 2));
 						fleetwaybgshit.animation.addByPrefix('a', 'BGblue');
@@ -4478,12 +4478,12 @@ class PlayState extends MusicBeatState
 							camFollow.x = dad.getMidpoint().x + 700;
 						case 'knucks':
 							camFollow.y = dad.getMidpoint().y + 50;
-							camFollow.x = dad.getMidpoint().x - 200;
+							camFollow.x = dad.getMidpoint().x - 300;
 						case 'sonic.exe alt':
 							camFollow.y = dad.getMidpoint().y - 350;
 							camFollow.x = dad.getMidpoint().x - 200;
 						case 'eggdickface':
-							camFollow.y = dad.getMidpoint().y - 50;
+							camFollow.y = dad.getMidpoint().y - 0;
 							camFollow.x = dad.getMidpoint().x + 100;
 						case 'beast-cam-fix':
 							camFollow.y = dad.getMidpoint().y - 100;
@@ -6927,11 +6927,11 @@ private function keyShit():Void // I've invested in emma stocks
 
 				case 1008:
 					remove(boyfriend);
-					boyfriend = new Boyfriend(2040.55 - 200, 685.6 - 130 - 46, 'bf-super');
+					boyfriend = new Boyfriend(1950.55, 830.6, 'bf-super');
 					add(boyfriend);
 
 					FlxG.camera.shake(0.02, 0.2);
-					FlxG.camera.flash(FlxColor.YELLOW, 0.2);
+					FlxG.camera.flash(FlxColor.YELLOW, 0.6);
 
 					FlxG.sound.play(Paths.sound('SUPERBF', 'exe'));
 

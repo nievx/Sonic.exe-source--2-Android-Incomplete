@@ -393,7 +393,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('idle', 'SONICmoveIDLE', 24); //sprite adaptationpurposes
 				animation.addByPrefix('singUP', 'SONICmoveUP', 24);
 				animation.addByPrefix('singRIGHT', 'SONICmoveRIGHT', 24);
-				animation.addByPrefix('singOWN', 'SONICmoveDOWN', 24); 
+				animation.addByPrefix('singDOWN', 'SONICmoveOWN', 24); 
 				animation.addByPrefix('singLEFT', 'SONICmoveLEFT', 24); //This is important
 
 				animation.addByPrefix('singDOWN-alt', 'SONIClaugh', 24);
@@ -437,23 +437,23 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
-			case 'sonicLordX':
-				frames = Paths.getSparrowAtlas('characters/SONIC_X');
-				animation.addByPrefix('idle', 'X_Idle', 24, false);
-				animation.addByPrefix('singUP', 'X_Up', 24, false);
-				animation.addByPrefix('singDOWN', 'X_Down', 24, false);
-				animation.addByPrefix('singLEFT', 'X_Left', 24, false);
-				animation.addByPrefix('singRIGHT', 'X_Right', 24, false);
-
-				addOffset('idle', -18, 120);
-				addOffset("singUP", 34, 261);
-				addOffset("singRIGHT", -86, 180);
-				addOffset("singLEFT", 17, 160);
-				addOffset("singDOWN", 77, 159);
-
-				setGraphicSize(Std.int(width * 1.2));
-
-				updateHitbox();
+				case 'sonicLordX':
+					frames = Paths.getSparrowAtlas('characters/SONIC_X');
+					animation.addByPrefix('idle', 'X_Idle', 24, false);
+					animation.addByPrefix('singUP', 'X_Up', 24, false);
+					animation.addByPrefix('singDOWN', 'X_Down', 24, false);
+					animation.addByPrefix('singLEFT', 'X_Left', 24, false);
+					animation.addByPrefix('singRIGHT', 'X_Right', 24, false);
+	
+					addOffset('idle', -18, 0);
+					addOffset("singUP", 34, 121);
+					addOffset("singRIGHT", -86, 40);
+					addOffset("singLEFT", 17, 20);
+					addOffset("singDOWN", 77, -21);
+	
+					setGraphicSize(Std.int(width * 1.2));
+	
+					updateHitbox();
 			case 'sonicLordXold':
 				frames = Paths.getSparrowAtlas('characters/SONIC_X_old');
 				animation.addByPrefix('idle', 'sonicX IDLE', 24, false);
