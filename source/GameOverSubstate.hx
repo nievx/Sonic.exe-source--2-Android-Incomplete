@@ -144,11 +144,11 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 		else if (PlayState.SONG.song.toLowerCase() == 'too-fest')
 		{
-			bfdeathshit = new FlxSprite().loadGraphic(Paths.image('bfisfuckingdead', 'exe'));
-			bfdeathshit.visible = false;
-			bfdeathshit.cameras = [coolcamera];
-			add(bfdeathshit);
-			bf.alpha = 0;
+			//bfdeathshit = new FlxSprite().loadGraphic(Paths.image('bfisfuckingdead', 'exe'));
+			//bfdeathshit.visible = false;
+			//bfdeathshit.cameras = [coolcamera];
+			//add(bfdeathshit);
+			//bf.alpha = 0;
 			new FlxTimer().start(4, function(tmr:FlxTimer)
 			{
 				LoadingState.loadAndSwitchState(new VideoState('assets/videos/BfFuckingDies', new SoundTestMenu()));			});

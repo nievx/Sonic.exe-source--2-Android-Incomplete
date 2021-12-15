@@ -300,8 +300,9 @@ class TitleState extends MusicBeatState
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 1, false, function(){
 					if(!FlxG.save.data.watermark){ //Eu irei te obrigar a colocar isso mermo então sodasse
+						FlxG.save.data.watermark = true;  //Eu fui muito burro Meu Deus...
 						LoadingState.loadAndSwitchState(new VideoState('assets/videos/bothCreditsAndIntro', new MainMenuState()));
-					} else {FlxG.save.data.watermark = true; FlxG.switchState(new MainMenuState());}
+					} else {FlxG.switchState(new MainMenuState());}
 				
 					});
 			});

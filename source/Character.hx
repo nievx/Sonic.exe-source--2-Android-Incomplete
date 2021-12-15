@@ -390,11 +390,11 @@ class Character extends FlxSprite
 			case 'sonic':
 				tex = Paths.getSparrowAtlas('characters/Sonic_EXE_Assets');
 				frames = tex;
-				animation.addByPrefix('idle', 'SONICmoveIDLE', 24, true); //sprite adaptationpurposes
+				animation.addByPrefix('idle', 'SONICmoveIDLE', 24); //sprite adaptationpurposes
 				animation.addByPrefix('singUP', 'SONICmoveUP', 24);
 				animation.addByPrefix('singRIGHT', 'SONICmoveRIGHT', 24);
-				animation.addByPrefix('singDOWN', 'SONICmoveDOWN', 24);
-				animation.addByPrefix('singLEFT', 'SONICmoveLEFT', 24);
+				animation.addByPrefix('singOWN', 'SONICmoveDOWN', 24); 
+				animation.addByPrefix('singLEFT', 'SONICmoveLEFT', 24); //This is important
 
 				animation.addByPrefix('singDOWN-alt', 'SONIClaugh', 24);
 
@@ -404,7 +404,7 @@ class Character extends FlxSprite
 				addOffset("singUP", 14, 47);
 				addOffset("singRIGHT", 16, 14);
 				addOffset("singLEFT", 152, -15);
-				addOffset("singDOWN", 77, -12);
+				addOffset("singOWN", 77, -12);
 				addOffset("singLAUGH", 50, -10);
 
 				addOffset("singDOWN-alt", 50, -10);
