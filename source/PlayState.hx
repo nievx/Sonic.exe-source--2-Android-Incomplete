@@ -7024,7 +7024,7 @@ private function keyShit():Void // I've invested in emma stocks
 					iconP2.animation.play('beast');
 
 					remove(boyfriend);
-					boyfriend = new Boyfriend(502.45 + 200, 370.45, 'bf-perspective');
+					boyfriend = new Boyfriend(502.45 + 200, 370.45, 'bf-perspective-flipped');
 					add(boyfriend);
 
 					boyfriend.flipX = true;
