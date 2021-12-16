@@ -7205,7 +7205,7 @@ private function keyShit():Void // I've invested in emma stocks
 					boyfriend = new Boyfriend(502.45, 370.45, 'bf-perspective-flipped');
 					add(boyfriend);
 			
-					boyfriend.flipX = true;
+					boyfriend.flipX = false;
 			}
 		}} //ufa nego, quanta coisa, esses caras são mais exagerados que a Nashira, Deus me livre... :ricardo_reverso:
 
