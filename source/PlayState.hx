@@ -1244,7 +1244,7 @@ class PlayState extends MusicBeatState
 						wall.scrollFactor.set(1.1, 1.1);
 						
 
-						floor = new FlxSprite(-2349, 921.25);
+						floor = new FlxSprite(-2100, 921.25);
 						floor.antialiasing = true;
 						floor.frames = Paths.getSparrowAtlas('Chamber/Floor');
 						floor.animation.addByPrefix('a', 'floor blue');
@@ -1278,7 +1278,7 @@ class PlayState extends MusicBeatState
 						emeraldbeam.visible = true; // this starts true, then when sonic falls in and screen goes white, this turns into flase
 						
 
-						emeraldbeamyellow = new FlxSprite(25, -800);
+						emeraldbeamyellow = new FlxSprite(125, -800);
 						emeraldbeamyellow.antialiasing = true;
 						emeraldbeamyellow.frames = Paths.getSparrowAtlas('Chamber/Emerald Beam Charged');
 						emeraldbeamyellow.setGraphicSize(Std.int(emeraldbeamyellow.width * 2));
@@ -1955,14 +1955,6 @@ class PlayState extends MusicBeatState
 		mcontrols.cameras = [camcontrol];
 
 		mcontrols.visible = false;
-
-		if(isRing || curSong == 'chaos'){
-		addVirtualPad(NONE, A);
-		var camcontrol1 = new FlxCamera();
-		FlxG.cameras.add(camcontrol1);
-		camcontrol1.bgColor.alpha = 0;
-		_virtualpad.cameras = [camcontrol1];
-		_virtualpad.visible = true;}
 		add(mcontrols);
 	    #end
 
@@ -3951,7 +3943,7 @@ class PlayState extends MusicBeatState
 		if (isRing)
 			counterNum.text = Std.string(cNum);
 
-		if ((FlxG.keys.justPressed.SPACE || controls.ACCEPT || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge)
+		if ((FlxG.keys.justPressed.SPACE || controls.UP_P || FlxG.keys.anyJustPressed([FlxKey.fromString(FlxG.save.data.dodgeBind)])) && canDodge)
 		{
 			dodging = true;
 			boyfriend.playAnim('dodge', true);
@@ -5593,10 +5585,7 @@ class PlayState extends MusicBeatState
 
 private function keyShit():Void // I've invested in emma stocks
 		{
-
-			if (controls.ACCEPT || controls.SPACE_P){holdera = true;} else {holdera = false;} //DIGA QUAIS SÃO AS CHANCES DE ISSO DAR ERRADO, EU DUVIDO VOCÊ DIZER!!!
-
-			// control arrays, order L D R U
+         		// control arrays, order L D R U
 			var holdArray:Array<Bool> = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
 			var pressArray:Array<Bool> = [
 				controls.LEFT_P,
@@ -5613,11 +5602,11 @@ private function keyShit():Void // I've invested in emma stocks
 			if (isRing)
 			{
 
-				holdArray = [controls.LEFT, controls.DOWN, holdera, controls.UP, controls.RIGHT];
+				holdArray = [controls.LEFT, controls.DOWN, controls.UP, controls.UP, controls.RIGHT];
 				pressArray = [
 					controls.LEFT_P,
 					controls.DOWN_P,
-					holdera,
+					controls.UP_P,
 					controls.UP_P,
 					controls.RIGHT_P
 				];
@@ -6927,7 +6916,7 @@ private function keyShit():Void // I've invested in emma stocks
 
 				case 1008:
 					remove(boyfriend);
-					boyfriend = new Boyfriend(1950.55, 830.6, 'bf-super');
+			                boyfriend = new Boyfriend(2040.55 - 90 - 200, 685.6 - 130 - 46 + 145, 'bf-super');
 					add(boyfriend);
 
 					FlxG.camera.shake(0.02, 0.2);
