@@ -285,31 +285,30 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-perspective-flipped':
-				var tex = Paths.getSparrowAtlas('characters/BFPhase3_Perspective_Flipped', 'shared');
+				var tex = Paths.getSparrowAtlas('characters/BFPhase3_Perspective', 'shared');
 				frames = tex;
 
 				trace(tex.frames.length);
-				trace("i am being loaded");
 
-				animation.addByPrefix('idle', 'Idle_Flip', 24, false);
-				animation.addByPrefix('singUP', 'Sing_Up_Flip', 24, false);
-				animation.addByPrefix('singLEFT', 'Sing_Left_Flip', 24, false);
-				animation.addByPrefix('singRIGHT', 'Sing_Right_Flip', 24, false);
-				animation.addByPrefix('singDOWN', 'Sing_Down_Flip', 24, false);
-				animation.addByPrefix('singUPmiss', 'Up_Miss_Flip', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'Left_Miss_Flip', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'Right_Miss_Flip', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'Down_Miss_Flip', 24, false);
+				animation.addByPrefix('idle', 'Idle', 24, false);
+				animation.addByPrefix('singUP', 'Sing_Up', 24, false);
+				animation.addByPrefix('singRIGHT', 'Sing_Right', 24, false);
+				animation.addByPrefix('singLEFT', 'Sing_Left', 24, false);
+				animation.addByPrefix('singDOWN', 'Sing_Down', 24, false);
+				animation.addByPrefix('singUPmiss', 'Up_Miss', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'Left_Miss', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'Miss_Right', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'Down_Miss', 24, false);
 
-				addOffset('idle', 46, -12);
-				addOffset("singUP", -22, 41);
-				addOffset("singRIGHT", 29, 9);
-				addOffset("singLEFT", 96, -12);
-				addOffset("singDOWN", 74, -14);
-				addOffset("singUPmiss", -22, 133);
-				addOffset("singRIGHTmiss", 106, 75);
-				addOffset("singLEFTmiss", 106, 75);
-				addOffset("singDOWNmiss", 105, 1);
+				addOffset('idle', 5, 4);
+				addOffset("singUP", 23, 63);
+				addOffset("singLEFT", 31, 9);
+				addOffset("singRIGHT", -75, -15);
+				addOffset("singDOWN", -51, -1);
+				addOffset("singUPmiss", 20, 135);
+				addOffset("singLEFTmiss", 10, 92);
+				addOffset("singRIGHTmiss", -70, 85);
+				addOffset("singDOWNmiss", -53, 10);
 
 				playAnim('idle');
 
@@ -723,7 +722,6 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 124, -59);
 				addOffset("singLEFT", -59, -65);
 				addOffset("singDOWN", 26, -95);
-				trace("i am being loaded");
 
 				flipX = true;
 
@@ -735,7 +733,6 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Tails RIGHT', 24);
 				animation.addByPrefix('singDOWN', 'Tails DOWN', 24);
 				animation.addByPrefix('singLEFT', 'Tails LEFT', 24);
-				trace("i am being loaded");
 
 				addOffset('idle', 0, 0);
 				addOffset("singUP", 29, 49);
