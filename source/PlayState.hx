@@ -2360,7 +2360,7 @@ class PlayState extends MusicBeatState
 
 		shakeCam2 = true;
 
-		new FlxTimer().start(0.8, function(tmr:FlxTimer)
+		new FlxTimer().start(0.3, function(tmr:FlxTimer)
 		{
 			shakeCam2 = false;
 		});
@@ -2371,7 +2371,7 @@ class PlayState extends MusicBeatState
 		
 			add(daNoteStatic);
 
-		new FlxTimer().start(.10, function(trol:FlxTimer) // fixed lmao
+		new FlxTimer().start(.8, function(trol:FlxTimer) // fixed lmao
 		{
 			daNoteStatic.alpha = 0;
 			trace('ended HITSTATICLAWL');
