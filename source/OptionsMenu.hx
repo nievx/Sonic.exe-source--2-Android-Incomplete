@@ -61,7 +61,7 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Trens", [
 			new FPSOption(""),
 			//new ReplayOption("View replays"),
-			new FlashingLightsOption("Ative essa opção caso não queira ter problemas com o chuvisco e talz"),
+			//new FlashingLightsOption("Ative essa opção caso não queira ter problemas com o chuvisco e talz"),
 			//new WatermarkOption("Enable and disable all watermarks from the engine."),
 			//new ShowInput("Display every single input in the score screen."),
 			new Optimization("Ligue isso se teu celular for bem... MAS TIPO BEM RUIM MERMO"),
