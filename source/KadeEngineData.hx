@@ -95,7 +95,7 @@ class KadeEngineData
 			FlxG.save.data.distractions = true;
 
 		if (FlxG.save.data.flashing == null)
-			FlxG.save.data.flashing = true;
+			FlxG.save.data.flashing = false;
 
 		if (FlxG.save.data.resetButton == null)
 			FlxG.save.data.resetButton = false;
