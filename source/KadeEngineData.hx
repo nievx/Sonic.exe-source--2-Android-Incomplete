@@ -16,10 +16,10 @@ class KadeEngineData
 		}
 
 		if (FlxG.save.data.lq == null)
-			FlxG.save.data.lq = false;
+			FlxG.save.data.lq = true;
 
 		if (FlxG.save.data.vfx == null)
-			FlxG.save.data.vfx = true;
+			FlxG.save.data.vfx = false;
 
 		if (FlxG.save.data.cammove == null)
 			FlxG.save.data.cammove = true;
