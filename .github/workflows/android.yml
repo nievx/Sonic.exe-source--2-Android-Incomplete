@@ -57,6 +57,7 @@ jobs:
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
           haxelib install flixel-addons 2.10.0
+          haxelib install newgrounds
           haxelib git faxe https://github.com/uhrobots/faxe --quiet
           haxelib git polymod https://github.com/MasterEric/polymod.git --quiet
           haxelib git extension-webview https://github.com/MatheusSilver/extension-webview.git --quiet
